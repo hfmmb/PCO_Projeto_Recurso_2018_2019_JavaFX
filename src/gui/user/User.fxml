@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.user.UserController">
+    <VBox>
+        <HBox alignment="TOP_CENTER">
+                <Label fx:id="labelDialogUserLoginSuccess" style="-fx-background-color: yellow; -fx-border-color: black; -fx-border-width: 2;" text="Introduza as suas credenciais abaixo.">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="8.0" />
+               </HBox.margin></Label>
+        </HBox>
+      <VBox alignment="TOP_CENTER">
+            <RadioButton fx:id="radioButtonDialogUserOrientado" onAction="#radioButtonDialogUserOrientadoActionListener" text="Orientado">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </RadioButton>
+       </VBox>
+      <VBox alignment="TOP_CENTER">
+            <RadioButton fx:id="radioButtonDialogUserSupervisor" onAction="#radioButtonDialogUserSupervisorActionListener" text="Supervisor">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </RadioButton>
+      </VBox>
+
+        <HBox alignment="CENTER">
+               <Label text="Username:" />
+         </HBox>
+        <HBox alignment="CENTER">
+        <TextField fx:id="textFieldDialogUserUsername" />
+        </HBox>
+        <HBox alignment="CENTER">
+            <Label text="Password:" />
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+        </HBox>
+        <HBox alignment="CENTER">
+            <PasswordField fx:id="passwordFieldDialogUserPassword">
+            <HBox.margin>
+               <Insets bottom="5.0" />
+            </HBox.margin></PasswordField>
+        </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="88.0">
+            <Label text="Especialidade:" />
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="104.0">
+            <TextField fx:id="textFieldDialogUserEspecialidade" />
+      </HBox>
+        <HBox alignment="TOP_CENTER">
+             <Button fx:id="buttonDialogUserLogin" onAction="#buttonDialogUserLoginActionListener" text="Login">
+            <HBox.margin>
+               <Insets right="6.0" />
+            </HBox.margin></Button>
+         <Button fx:id="buttonDialogUserRegister" onAction="#buttonDialogUserRegisterActionListener" text="Register" textAlignment="CENTER">
+            <HBox.margin>
+               <Insets left="6.0" />
+            </HBox.margin></Button>
+        </HBox>
+          </VBox>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
