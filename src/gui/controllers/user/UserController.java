@@ -1,8 +1,7 @@
-package gui.user;
+package gui.controllers.user;
 
-import gui.GuiController;
+import gui.controllers.GuiController;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 
 /**
  * Classe responsavel para servir de intermediaria entre a Classe "MainSystemGui e o codigo fxml estrutural da gui"

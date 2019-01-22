@@ -2,12 +2,14 @@ package negocios;
 
 import negocios.unidades.UnidadesMedida;
 
+import java.util.List;
+
 public class Indicador {
     private String tipo;
-    private UnidadesMedida unidadesMedida;
-    public Indicador(String tipo, UnidadesMedida unidadesMedida){
+    private UnidadesMedida unidadeMedida;
+    public Indicador(String tipo, UnidadesMedida unidadeMedida){
         this.tipo = tipo;
-        this.unidadesMedida = unidadesMedida;
+        this.unidadeMedida = unidadeMedida;
     }
 
     public String getTipo() {
@@ -18,14 +20,15 @@ public class Indicador {
         this.tipo = tipo;
     }
 
-    public UnidadesMedida getUnidadesMedida() {
-        return unidadesMedida;
+    public UnidadesMedida getUnidadeMedida() {
+        return unidadeMedida;
     }
 
-    public void setUnidadesMedida(UnidadesMedida unidadesMedida) {
-        this.unidadesMedida = unidadesMedida;
+    public void setUnidadeMedida(UnidadesMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
     }
-    private void gerarValor(){
 
+    public List getListUnidadesMedida(){
+        return unidadeMedida.getUnidadesMedidaRegistadas();
     }
 }

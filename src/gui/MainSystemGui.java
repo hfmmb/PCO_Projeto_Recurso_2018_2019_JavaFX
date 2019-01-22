@@ -16,8 +16,8 @@
 
 package gui;
 
-import gui.indicador.IndicadorController;
-import gui.user.UserController;
+import gui.controllers.indicador.IndicadorController;
+import gui.controllers.user.UserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,11 +34,11 @@ public class MainSystemGui extends Application {
         subsistema_negocios.setupEnvironment(); //Cria alguns defaults para o programa;
 
         window = primaryStage;
-        FXMLLoader fxmlLoaderUser = new FXMLLoader(getClass().getResource("user/User.fxml"));
+        FXMLLoader fxmlLoaderUser = new FXMLLoader(getClass().getResource("controllers/user/User.fxml"));
         Parent root = fxmlLoaderUser.load();
         loginRegisterDialog = new Scene(root, 350,250);
 
-        FXMLLoader fxmlLoaderIndicador = new FXMLLoader(getClass().getResource("indicador/Indicador.fxml"));
+        FXMLLoader fxmlLoaderIndicador = new FXMLLoader(getClass().getResource("controllers/indicador/Indicador.fxml"));
         Parent indicador = fxmlLoaderIndicador.load();
         indicadorDialog = new Scene(indicador, 450,300);
 
@@ -52,6 +52,8 @@ public class MainSystemGui extends Application {
         indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
         indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().select(5); //Seleciona a categoria "Uncategorized\Sem categoria"
 
+        indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
+                subsistema_negocios.getUnidadesMedidaRegistadas());
 
 
         userGuiController.buttonDialogUserRegister.setOnAction(actionEvent -> {
@@ -142,6 +144,13 @@ public class MainSystemGui extends Application {
         indicadorGuiController.radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {
             indicadorGuiController.radioButtonDialogIndicadorAutomatico.setSelected(false);
             indicadorGuiController.radioButtonDialogIndicadorManual.setSelected(true);
+        });
+
+        indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
+            if(indicadorGuiController.comboBoxDialogIndicadorCategoria.getValue().equals("Uncategorized")){
+                //subsistema_negocios.inserirIndicadorSemCategoria();
+            }
+            //else
         });
 
     }

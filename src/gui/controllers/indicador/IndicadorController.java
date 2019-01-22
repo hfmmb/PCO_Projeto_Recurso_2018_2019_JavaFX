@@ -1,6 +1,6 @@
-package gui.indicador;
+package gui.controllers.indicador;
 
-import gui.GuiController;
+import gui.controllers.GuiController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
@@ -17,39 +17,24 @@ public class IndicadorController extends GuiController {
     public ComboBox comboBoxDialogIndicadorUnidades;
     public TextField textFieldDialogIndicadorNome;
 
+    //Dummy Listeners, implemented in MainSystemGui
     public void buttonDialogIndicadorCancelActionListener(){
-        /*
-        * Button Listener
-        *
-        * */
-        buttonDialogIndicadorCancel.setOnAction(actionEvent -> {
-            System.out.print("Teste");
-
-        });// Dummy, implemented in MainSystemGui
-
+        buttonDialogIndicadorCancel.setOnAction(actionEvent -> {});
     }
 
-
     public void comboBoxDialogIndicadorCategoriaActionListener() {
-        comboBoxDialogIndicadorCategoria.setOnAction(actionEvent -> {
-            System.out.print("Teste1");
-
-        });// Dummy, implemented in MainSystemGui
+        comboBoxDialogIndicadorCategoria.setOnAction(actionEvent -> {});// Dummy, implemented in MainSystemGui
     }
 
     public void buttonDialogIndicadorCriarActionListener(){
-    buttonDialogIndicadorCriar.setOnAction(actionEvent ->{
-
-    });
+        buttonDialogIndicadorCriar.setOnAction(actionEvent ->{});
     }
 
-    public void radioButtonDialogIndicadorAutomaticoActionListener() {radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {
-
-    });
+    public void radioButtonDialogIndicadorAutomaticoActionListener() {
+        radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {});
     }
 
-    public void radioButtonDialogIndicadorManualActionListener() {radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {
-
-    });
+    public void radioButtonDialogIndicadorManualActionListener() {
+        radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {});
     }
 }

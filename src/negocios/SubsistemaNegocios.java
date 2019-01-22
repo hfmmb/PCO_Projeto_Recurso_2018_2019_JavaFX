@@ -62,7 +62,7 @@ public class SubsistemaNegocios {
 
         UnidadesMedidaMetrico unidadesMedidaMetrico = new UnidadesMedidaMetrico(20.0);
         unidadesMedidaMetrico.metrosParaCm();
-        inserirIndicadorSemCategoria(new Indicador("Centimetros Levantados", unidadesMedidaMetrico));
+        //inserirIndicadorSemCategoria(new Indicador("Centimetros Levantados", unidadesMedidaMetrico));
 
     }
 
@@ -151,10 +151,15 @@ public class SubsistemaNegocios {
 
     /**
      * Cria um indicador sem categoria
-     * @param indicador
      */
-    public void inserirIndicadorSemCategoria(Indicador indicador){
-
+    public void inserirIndicadorSemCategoria(String tipo,String tipoUnidades, String valor, String unidade){
+        Indicador indicador;
+        if (tipoUnidades.equals("Metrico")){
+            indicador = new Indicador(tipo,new UnidadesMedidaMetrico(Double.parseDouble(valor)));
+        }
+        else{
+            indicador = new Indicador(tipo,new UnidadesMedidaOutra(valor, unidade));
+        }
     List<Object> listaObjetos = categoriasIndicadoresMap.get("Uncategorized");
     listaObjetos.add(indicador);
     categoriasIndicadoresMap.replace("Uncategorized",listaObjetos);
@@ -223,5 +228,10 @@ public class SubsistemaNegocios {
             list.remove(orientado);
             supervisorOrientadosMap.replace(supervisor.getUtilizador(),list);
         }
+    }
+    public List getUnidadesMedidaRegistadas(){
+        Indicador indicador = new Indicador("Dummy", new UnidadesMedidaMetrico(0.0));
+        return indicador.getListUnidadesMedida();
+
     }
 }
