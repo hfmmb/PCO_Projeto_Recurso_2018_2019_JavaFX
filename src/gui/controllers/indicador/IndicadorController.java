@@ -1,10 +1,7 @@
 package gui.controllers.indicador;
 
 import gui.controllers.GuiController;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class IndicadorController extends GuiController {
 
@@ -16,6 +13,13 @@ public class IndicadorController extends GuiController {
     public ComboBox comboBoxDialogIndicadorExtensoes;
     public ComboBox comboBoxDialogIndicadorUnidades;
     public TextField textFieldDialogIndicadorNome;
+    private ToggleGroup radioButtonGroup = new ToggleGroup();
+
+    public void setup(){
+        radioButtonDialogIndicadorAutomatico.setToggleGroup(radioButtonGroup);
+        radioButtonDialogIndicadorManual.setToggleGroup(radioButtonGroup);
+        radioButtonDialogIndicadorAutomatico.setSelected(true);
+    }
 
     //Dummy Listeners, implemented in MainSystemGui
     public void buttonDialogIndicadorCancelActionListener(){

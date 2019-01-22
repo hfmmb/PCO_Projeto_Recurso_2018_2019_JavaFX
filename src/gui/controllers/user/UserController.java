@@ -17,6 +17,15 @@ public class UserController extends GuiController {
     public RadioButton radioButtonDialogUserSupervisor;
     public Button buttonDialogUserLogin;
     public TextField textFieldDialogUserEspecialidade;
+    private ToggleGroup radioButtonGroup = new ToggleGroup();
+
+    public void setup(){
+        radioButtonDialogUserSupervisor.setToggleGroup(radioButtonGroup);
+        radioButtonDialogUserSupervisor.setDisable(true);
+        radioButtonDialogUserOrientado.setToggleGroup(radioButtonGroup);
+        radioButtonDialogUserOrientado.setSelected(true);
+        textFieldDialogUserEspecialidade.setDisable(true);
+    }
 
     //Action Listeners
     public void buttonDialogUserRegisterActionListener(){
@@ -31,15 +40,12 @@ public class UserController extends GuiController {
     public void radioButtonDialogUserSupervisorActionListener() {
         radioButtonDialogUserSupervisor.setOnAction(actionEvent -> {
             textFieldDialogUserEspecialidade.setDisable(false); //Bloqueia o botao
-            radioButtonDialogUserSupervisor.setSelected(true);
-            radioButtonDialogUserOrientado.setSelected(false);
     });
     }
 
-    public void radioButtonDialogUserOrientadoActionListener() {radioButtonDialogUserOrientado.setOnAction(actionEvent -> {
+    public void radioButtonDialogUserOrientadoActionListener() {
+        radioButtonDialogUserOrientado.setOnAction(actionEvent -> {
         textFieldDialogUserEspecialidade.setDisable(true); //Desbloqueia o botao
-        radioButtonDialogUserSupervisor.setSelected(false);
-        radioButtonDialogUserOrientado.setSelected(true);
         });
     }
 }

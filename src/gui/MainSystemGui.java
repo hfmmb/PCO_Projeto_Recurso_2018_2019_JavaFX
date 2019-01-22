@@ -1,15 +1,15 @@
 /**
- *TODO 0: Fazer o registo de utilizadores novos. #DONE
- *TODO 1: Fazer o login de utilizadores. #DONE
- *TODO 2: Criar Categorias
- *TODO 3: Criar Indicadores
- *TODO 4: Permitir ao Orientado criar Indicadores
- *TODO 5: Permitir ao Orientado ver indicadores em que foi marcado
- *TODO 6:
- *TODO 7:
- *TODO 8:
- *TODO 9:
- *TODO 10:
+ *TODO UC1: Criar categoria de indicador                                            #DONE
+ *TODO UC2: Criar indicador                                                         #DONE
+ *TODO UC3: Registar novo utilizador                                                #DONE
+ *TODO UC4: Efectuar recolha de observacoes de um indicador
+ *TODO UC5: Establecer planos de objetivos de um indicador
+ *TODO UC6: Consultar historico de observacoes de um indicador
+ *TODO UC7: Comparar desempenho de um indicador em relacao ao plano establecido
+ *TODO UC8: Criar versao alternativa a um plano de um indicador
+ *TODO UC9: Associar Supervisor a um orientado
+ *TODO UC10: Fornecer informacao tecnica sobre o cumprimento de um plano
+ *TODO UC11: Autenticar utilizador                                                  #DONE
  * @autor: Hélder Filipe Mendonça de Medeiros Braga
  * @since: 19/01/2019
  */
@@ -45,16 +45,21 @@ public class MainSystemGui extends Application {
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
         window.show();
+        //window.setAlwaysOnTop(true);
+
         UserController userGuiController = fxmlLoaderUser.getController();//Aponta para controller da janela User
         IndicadorController indicadorGuiController = fxmlLoaderIndicador.getController();//Aponta para controller da janela Indicador
 
 
-        indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
-        indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().select(5); //Seleciona a categoria "Uncategorized\Sem categoria"
+        indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
+                subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
+        //indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().select(5); //Seleciona a categoria "Uncategorized\Sem categoria"
 
         indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
                 subsistema_negocios.getUnidadesMedidaRegistadas());
 
+        userGuiController.setup();
+        indicadorGuiController.setup();
 
         userGuiController.buttonDialogUserRegister.setOnAction(actionEvent -> {
             /*
@@ -74,7 +79,8 @@ public class MainSystemGui extends Application {
             else if(userGuiController.radioButtonDialogUserSupervisor.isSelected() &&
                     userGuiController.textFieldDialogUserUsername.getLength()>0 &&
                     userGuiController.passwordFieldDialogUserPassword.getLength()>0 &&
-                    userGuiController.textFieldDialogUserEspecialidade.getLength()>0){
+                    userGuiController.textFieldDialogUserEspecialidade.getLength()>0 &&
+                    userGuiController.labelDialogUserLoginSuccess.getText().contains("Supervisor")){
 
                 subsistema_negocios.registarSupervisor(
                         userGuiController.textFieldDialogUserUsername.getText(),
@@ -101,13 +107,15 @@ public class MainSystemGui extends Application {
                         case 2:
                             System.out.print("Bem vindo Supervisor "+username+"!");
                             userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Supervisor "+ username+"!");
-                            window.setScene(indicadorDialog);
-                            window.setTitle("Indicador");
+                            userGuiController.radioButtonDialogUserSupervisor.setDisable(false);
+                            //window.setScene(indicadorDialog);
+                            //window.setTitle("Indicador");
                             //indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll();
                             break;
                         case 1:
                             System.out.print("Bem vindo Orientado "+username+"!");
                             userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Orientado "+ username+"!");
+                            userGuiController.radioButtonDialogUserSupervisor.setDisable(true);
                             window.setScene(indicadorDialog);
                             window.setTitle("Indicador");
                             //indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(set);
@@ -134,16 +142,6 @@ public class MainSystemGui extends Application {
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
-        });
-
-        indicadorGuiController.radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {
-            indicadorGuiController.radioButtonDialogIndicadorAutomatico.setSelected(true);
-            indicadorGuiController.radioButtonDialogIndicadorManual.setSelected(false);
-        });
-
-        indicadorGuiController.radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {
-            indicadorGuiController.radioButtonDialogIndicadorAutomatico.setSelected(false);
-            indicadorGuiController.radioButtonDialogIndicadorManual.setSelected(true);
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {

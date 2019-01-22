@@ -1,10 +1,11 @@
 package negocios.unidades;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+//Por em set
 public abstract class UnidadesMedida {
-    private static List<String> unidadesMedidaRegistadas = new ArrayList<>();
+    private static Set<String> unidadesMedidaRegistadas = new HashSet<>();
     protected String unidade;
 
     protected UnidadesMedida(String unidade){
@@ -21,7 +22,7 @@ public abstract class UnidadesMedida {
         this.unidade = unidade;
     }
 
-    public static List<String> getUnidadesMedidaRegistadas() {
+    public static Set<String> getUnidadesMedidaRegistadas() {
         return unidadesMedidaRegistadas;
     }
 }

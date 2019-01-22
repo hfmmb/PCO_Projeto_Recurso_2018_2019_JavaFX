@@ -2,22 +2,27 @@ package negocios;
 
 import negocios.unidades.UnidadesMedida;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Indicador {
-    private String tipo;
+    private String designacao;
     private UnidadesMedida unidadeMedida;
-    public Indicador(String tipo, UnidadesMedida unidadeMedida){
-        this.tipo = tipo;
+    private Set<HistoricoIndicador> historicoIndicador = new HashSet<>();
+    public Indicador(String designacao, UnidadesMedida unidadeMedida){
+        this.designacao = designacao;
         this.unidadeMedida = unidadeMedida;
+        historicoIndicador.add(new HistoricoIndicador(unidadeMedida.getUnidade()));
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getDesignacao() {
+        return designacao;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDesignacao(String designacao) {
+        this.designacao = designacao;
     }
 
     public UnidadesMedida getUnidadeMedida() {
@@ -28,7 +33,7 @@ public class Indicador {
         this.unidadeMedida = unidadeMedida;
     }
 
-    public List getListUnidadesMedida(){
+    public Set getListUnidadesMedida(){
         return unidadeMedida.getUnidadesMedidaRegistadas();
     }
 }
