@@ -23,13 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jdk.jfr.Experimental;
-import jdk.jfr.Unsigned;
 import negocios.SubsistemaNegocios;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Set;
 
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX

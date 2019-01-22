@@ -1,11 +1,13 @@
 package negocios;
 
+import negocios.unidades.UnidadesMedida;
+
 public class Indicador {
     private String tipo;
-    private String valor;
-    public Indicador(String tipo, String valor){
+    private UnidadesMedida unidadesMedida;
+    public Indicador(String tipo, UnidadesMedida unidadesMedida){
         this.tipo = tipo;
-        this.valor = valor;
+        this.unidadesMedida = unidadesMedida;
     }
 
     public String getTipo() {
@@ -16,12 +18,12 @@ public class Indicador {
         this.tipo = tipo;
     }
 
-    public String getValor() {
-        return valor;
+    public UnidadesMedida getUnidadesMedida() {
+        return unidadesMedida;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setUnidadesMedida(UnidadesMedida unidadesMedida) {
+        this.unidadesMedida = unidadesMedida;
     }
     private void gerarValor(){
 

@@ -1,5 +1,7 @@
 package negocios;
 
+import negocios.unidades.UnidadesMedidaMetrico;
+import negocios.unidades.UnidadesMedidaOutra;
 import java.util.*;
 
 /**
@@ -50,15 +52,17 @@ public class SubsistemaNegocios {
 
         //Criar alguns indicadores associados a categorias...
 
-        associarIndicadorCategoria(new Categoria("Saude Geral"), new Indicador("Temperatura Corporal","37"));
-        associarIndicadorCategoria(new Categoria("Saude Arterial"), new Indicador("Tensao Arterial","120"));
-        associarIndicadorCategoria(new Categoria("Hobbies"), new Indicador("Livros lidos","50"));
-        associarIndicadorCategoria(new Categoria("Viagem"), new Indicador("Horas de Voo","125"));
-        associarIndicadorCategoria(new Categoria("Lazer"), new Indicador("Vitorias xadrez","10"));
+        associarIndicadorCategoria(new Categoria("Saude Geral"), new Indicador("Temperatura Corporal", new UnidadesMedidaOutra("37","ºC")));
+        associarIndicadorCategoria(new Categoria("Saude Arterial"), new Indicador("Tensao Arterial", new UnidadesMedidaOutra("120","mmHg")));
+        associarIndicadorCategoria(new Categoria("Hobbies"), new Indicador("Livros lidos", new UnidadesMedidaOutra("50","Livros")));
+        associarIndicadorCategoria(new Categoria("Viagem"), new Indicador("Horas de Voo",new UnidadesMedidaOutra("125","Horas")));
+        associarIndicadorCategoria(new Categoria("Lazer"), new Indicador("Vitorias xadrez",new UnidadesMedidaOutra("10", "Vitorias")));
 
         //Criar alguns indicadores "Sem Categoria"
 
-        inserirIndicadorSemCategoria(new Indicador("Pulsacoes","20"));
+        UnidadesMedidaMetrico unidadesMedidaMetrico = new UnidadesMedidaMetrico(20.0);
+        unidadesMedidaMetrico.metrosParaCm();
+        inserirIndicadorSemCategoria(new Indicador("Centimetros Levantados", unidadesMedidaMetrico));
 
     }
 
