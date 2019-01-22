@@ -23,7 +23,7 @@ public class Indicador {
     public void setValor(String valor) {
         this.valor = valor;
     }
-    //private void gerarValor(){
+    private void gerarValor(){
 
     }
 }
