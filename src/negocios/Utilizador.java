@@ -61,4 +61,5 @@ public abstract class Utilizador {
     protected void removerCategoria(String categoria){
         todasCategoriasSet.remove(categoria);
 }
+
 }

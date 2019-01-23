@@ -29,25 +29,39 @@ public class SubsistemaNegocios {
      * Cria alguns valores predefinidos para ajudar com o debug e teste do programa Utilizadores, Categorias, etc...
      */
     public void setupEnvironment(){
+        //Regista orientados no sistema
         registarOrientado("Dante","Alighieri");
         registarOrientado("Mike", "Tyson");
         registarOrientado("Muhammad","Ali");
         registarOrientado("Tokugawa","Ieyasu");
+
+        //Regista supervisores no sistema
         registarSupervisor("Miura", "Kentaro","Mangaka");
         registarSupervisor("Admiral Yi","Sun-shin","Admiral");
         registarSupervisor("Paul","Atreides","General");
         registarSupervisor("John","Titor","Engenheiro");
 
+        //Faz setup de alguns orientados para testar o sistema
         Orientado orientado = (Orientado) utilizadoresRegistadosMap.get("Muhammad");
+        Orientado orientado2 = (Orientado) utilizadoresRegistadosMap.get("Mike");
+        Orientado orientado3 = (Orientado) utilizadoresRegistadosMap.get("Dante");
+        Orientado orientado4 = (Orientado) utilizadoresRegistadosMap.get("Tokugawa");
 
-        //Inicializar algumas categorias no sistema...
+        //Faz setup de alguns supervisores para testar o sistema
+        Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get("Paul");
+
+        //Inicializar algumas categorias no sistema no orientado...
         orientado.adicionarCategoria(new Categoria("Saude Geral"));
         orientado.adicionarCategoria(new Categoria("Saude Cardiaca"));
         orientado.adicionarCategoria(new Categoria("Boa Forma"));
         orientado.adicionarCategoria(new Categoria("Brevet"));
         orientado.adicionarCategoria(new Categoria("Preparacao para maratona"));
 
-
+        //Associa alguns orientados a um supervisor
+        supervisor.associarOrientadoSupervisor(orientado);
+        supervisor.associarOrientadoSupervisor(orientado2);
+        supervisor.associarOrientadoSupervisor(orientado3);
+        supervisor.associarOrientadoSupervisor(orientado4);
     }
 
     /**
@@ -156,5 +170,93 @@ public class SubsistemaNegocios {
             return false;
         }
 
+    }
+
+    /**
+     * Insere uma categoria num orientado como supervisor
+     */
+    public boolean inserirCategoriaEmOrientadoComoSupervisor(String usernameSupervisor, String usernameOrientado, String nomeCategoria){
+        if (utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor && utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado) {
+            Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+            Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
+            supervisor.inserirCategoriaOrientado(nomeCategoria, orientado);
+        return true;
+        }
+        return false;
+    }
+
+    /**
+     * Insere uma categoria como utilizador do tipo supervisor retorna true caso tenha sucesso, caso contrario retorna false
+     * @param usernameSupervisor
+     * @param nomeCategoria
+     * @return
+     */
+    public boolean inserirCategoriaComoSupervisor(String usernameSupervisor, String nomeCategoria) {
+        if(utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor){
+        Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+        supervisor.insertCategoria(nomeCategoria);
+        return true;
+        }
+        return false;
+    }
+
+    /**
+     * Insere uma categoria como utilizador do tipo orientado retorna true caso tenha sucesso, caso contrario retorna false
+     * @param usernameOrientado
+     * @param nomeCategoria
+     * @return
+     */
+        public boolean inserirCategoriaComoOrientado(String usernameOrientado, String nomeCategoria){
+            if(utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado){
+                Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
+                orientado.insertCategoria(nomeCategoria);
+            return true;
+            }
+            return false;
+    }
+
+    /**
+     * Obtem os orientados associados a um determinado supervisor
+     * @param usernameSupervisor
+     * @return
+     */
+    public Set<Orientado> getOrientadosSupervisor(String usernameSupervisor){
+            Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+            return supervisor.getOrientadosAssociadosSupervisor();
+    }
+
+
+    /**
+     * Obtem o username dos orientados associados a um determinado supervisor
+     * @param usernameSupervisor
+     * @return
+     */
+    public Set<String> getOrientadosSupervisorUsername(String usernameSupervisor){
+        Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+        return supervisor.getUsernameOrientadosAssociadosSupervisor();
+    }
+
+
+    /**
+     * Associa um determinado orientado a um supervisor
+     * @param usernameSupervisor
+     * @param usernameOrientado
+     */
+
+    public void associarOrientadoSupervisor(String usernameSupervisor, String usernameOrientado){
+        Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+        Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
+        supervisor.associarOrientadoSupervisor(orientado);
+    }
+
+    /**
+     * Desassocia um determinado orientado de um supervisor
+     * @param usernameSupervisor
+     * @param usernameOrientado
+     */
+    public void desassociarOrientadosSupervisor(String usernameSupervisor, String usernameOrientado){
+        Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
+        Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
+        supervisor.desassociarOrientadoSupervisor(orientado);
     }
 }

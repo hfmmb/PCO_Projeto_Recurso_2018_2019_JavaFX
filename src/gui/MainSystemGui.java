@@ -16,6 +16,7 @@
 
 package gui;
 
+import gui.controllers.categoria.CategoriaController;
 import gui.controllers.controlPanel.ControlPanelController;
 import gui.controllers.indicador.IndicadorController;
 import gui.controllers.user.UserController;
@@ -26,11 +27,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import negocios.SubsistemaNegocios;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog; //Layout das diferentes janelas
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
         subsistema_negocios.setupEnvironment(); //Cria alguns defaults para o programa;
 
@@ -38,27 +43,30 @@ public class MainSystemGui extends Application {
 
         FXMLLoader fxmlLoaderUser = new FXMLLoader(getClass().getResource("controllers/user/User.fxml"));
         Parent root = fxmlLoaderUser.load();
-        loginRegisterDialog = new Scene(root, 350,250);
+        loginRegisterDialog = new Scene(root, 350, 250);
 
         FXMLLoader fxmlLoaderIndicador = new FXMLLoader(getClass().getResource("controllers/indicador/Indicador.fxml"));
         Parent indicador = fxmlLoaderIndicador.load();
-        indicadorDialog = new Scene(indicador, 600,300);
+        indicadorDialog = new Scene(indicador, 600, 300);
 
         FXMLLoader fxmlLoaderControlPanel = new FXMLLoader(getClass().getResource("controllers/controlPanel/ControlPanel.fxml"));
         Parent controlPanel = fxmlLoaderControlPanel.load();
-        controlPanelDialog = new Scene(controlPanel, 300,300);
+        controlPanelDialog = new Scene(controlPanel, 300, 300);
+
+        FXMLLoader fxmlLoaderCategoria = new FXMLLoader(getClass().getResource("controllers/categoria/Categoria.fxml"));
+        Parent categoria = fxmlLoaderCategoria.load();
+        categoriaDialog = new Scene(categoria, 300, 300);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
 
-
         window.show();
-        //window.setAlwaysOnTop(true);
+
 
         UserController userGuiController = fxmlLoaderUser.getController();//Aponta para controller da janela User
         IndicadorController indicadorGuiController = fxmlLoaderIndicador.getController();//Aponta para controller da janela Indicador
         ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
-
+        CategoriaController categoriaGuiController = fxmlLoaderCategoria.getController();
 
         indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
                 subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
@@ -69,6 +77,9 @@ public class MainSystemGui extends Application {
 
         userGuiController.setup();
         indicadorGuiController.setup();
+        controlPanelGuiController.setup();
+        categoriaGuiController.setup();
+
 
         userGuiController.buttonDialogUserRegister.setOnAction(actionEvent -> {
             /*
@@ -76,27 +87,27 @@ public class MainSystemGui extends Application {
              * Verifica se os campos de username e password estao vazios ou não, e verifica se o utilizador a registar
              * é do tipo Orientado ou do tipo Supervisor
              * */
-            if(userGuiController.radioButtonDialogUserOrientado.isSelected() &&
-                    userGuiController.textFieldDialogUserUsername.getLength()>0 &&
-                    userGuiController.passwordFieldDialogUserPassword.getLength()>0){
+            if (userGuiController.radioButtonDialogUserOrientado.isSelected() &&
+                    userGuiController.textFieldDialogUserUsername.getLength() > 0 &&
+                    userGuiController.passwordFieldDialogUserPassword.getLength() > 0) {
 
                 subsistema_negocios.registarOrientado(
                         userGuiController.textFieldDialogUserUsername.getText(),
                         userGuiController.passwordFieldDialogUserPassword.getText());
                 System.out.print("Orientado registado com sucesso!");
-            }
-            else if(userGuiController.radioButtonDialogUserSupervisor.isSelected() &&
-                    userGuiController.textFieldDialogUserUsername.getLength()>0 &&
-                    userGuiController.passwordFieldDialogUserPassword.getLength()>0 &&
-                    userGuiController.textFieldDialogUserEspecialidade.getLength()>0 &&
-                    userGuiController.labelDialogUserLoginSuccess.getText().contains("Supervisor")){
+            } else if (userGuiController.radioButtonDialogUserSupervisor.isSelected() &&
+                    userGuiController.textFieldDialogUserUsername.getLength() > 0 &&
+                    userGuiController.passwordFieldDialogUserPassword.getLength() > 0 &&
+                    userGuiController.textFieldDialogUserEspecialidade.getLength() > 0 &&
+                    userGuiController.labelDialogUserLoginSuccess.getText().contains("Supervisor")) {
 
                 subsistema_negocios.registarSupervisor(
                         userGuiController.textFieldDialogUserUsername.getText(),
-                        userGuiController.passwordFieldDialogUserPassword.getText(),userGuiController.textFieldDialogUserEspecialidade.getText());
+                        userGuiController.passwordFieldDialogUserPassword.getText(), userGuiController.textFieldDialogUserEspecialidade.getText());
                 System.out.print("Supervisor registado com sucesso!");
+            } else {
+                System.out.println("Credenciais invalidas!");
             }
-            else{System.out.println("Credenciais invalidas!");}
 
         });
 
@@ -105,46 +116,44 @@ public class MainSystemGui extends Application {
              * Action listener da janela de Login e Registo, para o botao de efectuar o Login de supervisores e orientados
              * Faz o login de orientados e supervisores
              * */
-                Integer checker;
-                String username = userGuiController.textFieldDialogUserUsername.getText();
-                String password = userGuiController.passwordFieldDialogUserPassword.getText();
+            Integer checker;
+            String username = userGuiController.textFieldDialogUserUsername.getText();
+            String password = userGuiController.passwordFieldDialogUserPassword.getText();
 
-                if(username.length()>0 && password.length()>0){
+            if (username.length() > 0 && password.length() > 0) {
                 checker = subsistema_negocios.checkLoginCredentials(username, password);
 
-                    switch (checker){
-                        case 2:
-                            System.out.print("Bem vindo Supervisor "+username+"!");
-                            userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Supervisor "+ username+"!");
-                            userGuiController.radioButtonDialogUserSupervisor.setDisable(false);
-                            window.setScene(controlPanelDialog);
-                            window.setTitle("Control Panel");
-                            controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(false);
+                switch (checker) {
+                    case 2:
+                        System.out.println("Bem vindo Supervisor " + username + "!");
+                        userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Supervisor " + username + "!");
+                        userGuiController.radioButtonDialogUserSupervisor.setDisable(false);
+                        window.setScene(controlPanelDialog);
+                        window.setTitle("Control Panel");
+                        controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(false);
 
-                            break;
-                        case 1:
-                            System.out.print("Bem vindo Orientado "+username+"!");
-                            userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Orientado "+ username+"!");
-                            userGuiController.radioButtonDialogUserSupervisor.setDisable(true);
-                            window.setScene(controlPanelDialog);
-                            window.setTitle("Control Panel");
-                            controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(true);
-                            //controlPanelGuiController.
-                            break;
-                        case -1:
-                            System.out.println("Password incorreta!");
-                            userGuiController.labelDialogUserLoginSuccess.setText("Password incorreta!");
-                            break;
-                        case -2:
-                            System.out.println("Utilizador inexistente!");
-                            userGuiController.labelDialogUserLoginSuccess.setText("Utilizador inexistente!");
-                            break;
-                    }
+                        break;
+                    case 1:
+                        System.out.println("Bem vindo Orientado " + username + "!");
+                        userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Orientado " + username + "!");
+                        userGuiController.radioButtonDialogUserSupervisor.setDisable(true);
+                        window.setScene(controlPanelDialog);
+                        window.setTitle("Control Panel");
+                        controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(true);
+                        break;
+                    case -1:
+                        System.out.println("Password incorreta!");
+                        userGuiController.labelDialogUserLoginSuccess.setText("Password incorreta!");
+                        break;
+                    case -2:
+                        System.out.println("Utilizador inexistente!");
+                        userGuiController.labelDialogUserLoginSuccess.setText("Utilizador inexistente!");
+                        break;
                 }
-                else {
-                    System.out.println("Username ou password vazios!");
-                    userGuiController.labelDialogUserLoginSuccess.setText("Username ou password vazios!");
-                }
+            } else {
+                System.out.println("Username ou password vazios!");
+                userGuiController.labelDialogUserLoginSuccess.setText("Username ou password vazios!");
+            }
         });
 
         indicadorGuiController.buttonDialogIndicadorCancel.setOnAction(actionEvent -> {
@@ -154,14 +163,13 @@ public class MainSystemGui extends Application {
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
             String username = userGuiController.textFieldDialogUserUsername.getText();
-            if(indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() == null){
+            if (indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() == null) {
                 indicadorGuiController.labelDialogIndicadorLogin.setText(
                         indicadorGuiController.labelDialogIndicadorLogin.getText() + username);
-                if(subsistema_negocios.getSupervisorStatus(username)){
+                if (subsistema_negocios.getSupervisorStatus(username)) {
                     //Supervisor
-//indicadorGuiController.
-                }
-                else{
+
+                } else {
                     //Orientado
 
                 }
@@ -173,14 +181,44 @@ public class MainSystemGui extends Application {
         controlPanelGuiController.buttonDialogControlPanelVoltar.setOnAction(actionEvent -> {
             window.setScene(loginRegisterDialog);
         });
+        categoriaGuiController.buttonDialogCategoriaVoltar.setOnAction(actionEvent -> {
+            window.setScene(controlPanelDialog);
+        });
+
+        categoriaGuiController.buttonDialogCategoriaCriar.setOnAction(actionEvent -> {
+            String username = userGuiController.textFieldDialogUserUsername.getText();
+            String nomeCategoria = categoriaGuiController.textFieldDialogCategoriaNome.getText();
+            if (categoriaGuiController.textFieldDialogCategoriaNome.getText().length() > 0) {
+
+                if (categoriaGuiController.radioButtonDialogCategoriaOrientado.isSelected()) {//Orientado insere categoria em si mesmo
+                    subsistema_negocios.inserirCategoriaComoOrientado(username, nomeCategoria);
+                    System.out.println("Nova categoria criada com sucesso para o orientado "+username+"!");
+;
+                } else if (categoriaGuiController.radioButtonDialogCategoriaSupervisor.isSelected()) {//Supervisor insere categoria no sistema
+                    subsistema_negocios.inserirCategoriaComoSupervisor(username, nomeCategoria);
+                    System.out.println("Nova categoria criada com sucesso no sistema pelo supervisor "+username+"!");
+
+                } else {//Supervisor insere categoria em categorias do orientado
+                    String usernameOrientado = categoriaGuiController.comboBoxDialogCategoriaOrientado.getValue().toString();
+                    subsistema_negocios.inserirCategoriaEmOrientadoComoSupervisor(username, usernameOrientado, nomeCategoria);
+                    System.out.println("Nova categoria criada com sucesso no orientado "+ usernameOrientado +" pelo supervisor " + username +"!");
+                }
+            }
+        });
+
 
         controlPanelGuiController.buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {
             window.setScene(indicadorDialog);
         });
+
+
+      controlPanelGuiController.buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
+          window.setScene(categoriaDialog);
+          Set<String> set = subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText());
+
+          categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().addAll(set);
+            });
         }
-
-
-
 
     public static void main(String[] args) {
         launch(args);

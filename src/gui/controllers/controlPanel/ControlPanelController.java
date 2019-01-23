@@ -11,6 +11,7 @@ public class ControlPanelController extends GuiController {
     public Button buttonDialogControlPanelConsultarPlanosOrientado;
     public Label labelDialogControlPanelLogin;
     public Button buttonDialogControlPanelCriarIndicadores;
+    public Button buttonDialogControlPanelCriarCategoria;
 
     public void setup(){
     }
@@ -27,5 +28,11 @@ public class ControlPanelController extends GuiController {
     }
     public void buttonDialogControlPanelCriarIndicadoresActionListener(){
         buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {});
+    }
+
+    public void buttonDialogControlPanelCriarCategoriaActionListener(){
+        buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
+
+        });
     }
 }

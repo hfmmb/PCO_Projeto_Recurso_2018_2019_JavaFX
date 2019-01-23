@@ -37,4 +37,6 @@ public class Orientado extends Utilizador {
     public Set<Indicador> getIndicadoresSemCategoriaSet() {
         return indicadoresSemCategoriaSet;
     }
+
+
 }
