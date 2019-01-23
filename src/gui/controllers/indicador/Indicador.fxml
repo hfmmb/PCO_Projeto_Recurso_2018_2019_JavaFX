@@ -14,7 +14,7 @@
   <columnConstraints>
     <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="50.0" />
   </columnConstraints>
   <rowConstraints>
@@ -35,12 +35,13 @@
       <Label alignment="CENTER_RIGHT" text="Nome:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Extensoes:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          <Label text="Unidades:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         <Button fx:id="buttonDialogIndicadorCancel" onAction="#buttonDialogIndicadorCancelActionListener" text="Cancelar" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-      <Button fx:id="buttonDialogIndicadorCriar" onAction="#buttonDialogIndicadorCriarActionListener" text="Criar" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <ComboBox fx:id="comboBoxDialogIndicadorCategoria" onAction="#comboBoxDialogIndicadorCategoriaActionListener" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <ComboBox fx:id="comboBoxDialogIndicadorExtensoes" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <ComboBox fx:id="comboBoxDialogIndicadorUnidades" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <RadioButton fx:id="radioButtonDialogIndicadorManual" onAction="#radioButtonDialogIndicadorManualActionListener" mnemonicParsing="false" text="Manual" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+         <Button fx:id="buttonDialogIndicadorCancel" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogIndicadorCancelActionListener" text="Cancelar" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Button fx:id="buttonDialogIndicadorCriar" defaultButton="true" onAction="#buttonDialogIndicadorCriarActionListener" text="Criar" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <ComboBox fx:id="comboBoxDialogIndicadorCategoria" onAction="#comboBoxDialogIndicadorCategoriaActionListener" prefWidth="250.0" promptText="Seleccione uma categoria" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <ComboBox fx:id="comboBoxDialogIndicadorExtensoes" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <ComboBox fx:id="comboBoxDialogIndicadorUnidades" prefWidth="250.0" promptText="Seleccione uma unidade" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <RadioButton fx:id="radioButtonDialogIndicadorManual" mnemonicParsing="false" onAction="#radioButtonDialogIndicadorManualActionListener" text="Manual" GridPane.columnIndex="2" GridPane.rowIndex="3" />
       <RadioButton fx:id="radioButtonDialogIndicadorAutomatico" onAction="#radioButtonDialogIndicadorAutomaticoActionListener" text="Automatico" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <TextField fx:id="textFieldDialogIndicadorNome" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <TextField fx:id="textFieldDialogIndicadorNome" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+   <Label fx:id="labelDialogIndicadorLogin" alignment="CENTER" contentDisplay="CENTER" text="Entrou como " GridPane.columnIndex="2" />
    </GridPane>

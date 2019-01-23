@@ -144,4 +144,17 @@ public class SubsistemaNegocios {
         return indicador.getSetUnidadesMedida();
 
     }
+
+    /**
+     * Retorna true se o username dado pertence a um supervisor, false se pertence a um orientado
+     * @return
+     */
+    public boolean getSupervisorStatus(String username){
+        if(utilizadoresRegistadosMap.get(username) instanceof Supervisor){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

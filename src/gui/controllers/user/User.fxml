@@ -64,7 +64,7 @@
             <TextField fx:id="textFieldDialogUserEspecialidade" />
       </HBox>
         <HBox alignment="TOP_CENTER">
-             <Button fx:id="buttonDialogUserLogin" onAction="#buttonDialogUserLoginActionListener" text="Login">
+             <Button fx:id="buttonDialogUserLogin" defaultButton="true" onAction="#buttonDialogUserLoginActionListener" text="Login">
             <HBox.margin>
                <Insets right="6.0" />
             </HBox.margin></Button>

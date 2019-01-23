@@ -16,6 +16,7 @@
 
 package gui;
 
+import gui.controllers.controlPanel.ControlPanelController;
 import gui.controllers.indicador.IndicadorController;
 import gui.controllers.user.UserController;
 import javafx.application.Application;
@@ -27,28 +28,36 @@ import negocios.SubsistemaNegocios;
 
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog; //Layout das diferentes janelas
     @Override
     public void start(Stage primaryStage) throws Exception{
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
         subsistema_negocios.setupEnvironment(); //Cria alguns defaults para o programa;
 
         window = primaryStage;
+
         FXMLLoader fxmlLoaderUser = new FXMLLoader(getClass().getResource("controllers/user/User.fxml"));
         Parent root = fxmlLoaderUser.load();
         loginRegisterDialog = new Scene(root, 350,250);
 
         FXMLLoader fxmlLoaderIndicador = new FXMLLoader(getClass().getResource("controllers/indicador/Indicador.fxml"));
         Parent indicador = fxmlLoaderIndicador.load();
-        indicadorDialog = new Scene(indicador, 450,300);
+        indicadorDialog = new Scene(indicador, 600,300);
+
+        FXMLLoader fxmlLoaderControlPanel = new FXMLLoader(getClass().getResource("controllers/controlPanel/ControlPanel.fxml"));
+        Parent controlPanel = fxmlLoaderControlPanel.load();
+        controlPanelDialog = new Scene(controlPanel, 300,300);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
+
+
         window.show();
         //window.setAlwaysOnTop(true);
 
         UserController userGuiController = fxmlLoaderUser.getController();//Aponta para controller da janela User
         IndicadorController indicadorGuiController = fxmlLoaderIndicador.getController();//Aponta para controller da janela Indicador
+        ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
 
 
         indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
@@ -108,17 +117,19 @@ public class MainSystemGui extends Application {
                             System.out.print("Bem vindo Supervisor "+username+"!");
                             userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Supervisor "+ username+"!");
                             userGuiController.radioButtonDialogUserSupervisor.setDisable(false);
-                            //window.setScene(indicadorDialog);
-                            //window.setTitle("Indicador");
-                            //indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll();
+                            window.setScene(controlPanelDialog);
+                            window.setTitle("Control Panel");
+                            controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(false);
+
                             break;
                         case 1:
                             System.out.print("Bem vindo Orientado "+username+"!");
                             userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Orientado "+ username+"!");
                             userGuiController.radioButtonDialogUserSupervisor.setDisable(true);
-                            window.setScene(indicadorDialog);
-                            window.setTitle("Indicador");
-                            //indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(set);
+                            window.setScene(controlPanelDialog);
+                            window.setTitle("Control Panel");
+                            controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(true);
+                            //controlPanelGuiController.
                             break;
                         case -1:
                             System.out.println("Password incorreta!");
@@ -137,22 +148,39 @@ public class MainSystemGui extends Application {
         });
 
         indicadorGuiController.buttonDialogIndicadorCancel.setOnAction(actionEvent -> {
-            window.setScene(loginRegisterDialog);
+            window.setScene(controlPanelDialog);
             window.setTitle("Login");
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
+            String username = userGuiController.textFieldDialogUserUsername.getText();
+            if(indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() == null){
+                indicadorGuiController.labelDialogIndicadorLogin.setText(
+                        indicadorGuiController.labelDialogIndicadorLogin.getText() + username);
+                if(subsistema_negocios.getSupervisorStatus(username)){
+                    //Supervisor
+//indicadorGuiController.
+                }
+                else{
+                    //Orientado
 
-        });
-
-        indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
-            if(indicadorGuiController.comboBoxDialogIndicadorCategoria.getValue().equals("Uncategorized")){
+                }
+                System.out.println("Indicador sem categoria criado com sucesso!");
 
             }
-            //else
         });
 
-    }
+        controlPanelGuiController.buttonDialogControlPanelVoltar.setOnAction(actionEvent -> {
+            window.setScene(loginRegisterDialog);
+        });
+
+        controlPanelGuiController.buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {
+            window.setScene(indicadorDialog);
+        });
+        }
+
+
+
 
     public static void main(String[] args) {
         launch(args);
