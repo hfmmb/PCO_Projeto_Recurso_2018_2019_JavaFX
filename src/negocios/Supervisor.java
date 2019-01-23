@@ -7,16 +7,6 @@ public class Supervisor extends Utilizador {
         this.especialidade = especialidade;
     }
 
-    @Override
-    public String getUtilizador() {
-        return super.getUtilizador();
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
     public String getEspecialidade() {
         return especialidade;
     }

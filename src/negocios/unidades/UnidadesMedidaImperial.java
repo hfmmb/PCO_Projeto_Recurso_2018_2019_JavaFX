@@ -1,49 +1,50 @@
 package negocios.unidades;
 
 /**
- * Classe responsavel por manter unidades do sistema metrico e fazer conversoes das mesmas
+ * Classe responsavel por manter unidades do sistema imperial e fazer conversoes das mesmas
  */
 public class UnidadesMedidaImperial extends UnidadesMedida {
     private double valor;
     private String unidade;
     public UnidadesMedidaImperial(Double valor){
-        super("metros");
+        super("Jardas");
         this.valor = valor;
     }
 
-    public double metrosParaMm(){
-        valor = metrosParaCm() * 10;
-        unidade = "milimetros";
-        return valor;
-    }
-    public double metrosParaCm(){
-        valor = metrosParaDec() * 10;
-        unidade = "centimetros";
+    public double jardasParaPolegadas(){
+        valor = jardasParaPes() * 12; //1 pe == 12 polegadas
+        unidade = "Polegadas";
         return valor;
 
     }
-    public double metrosParaDec(){
-        valor = valor * 10;
-        unidade = "decimetros";
+    public double jardasParaPes(){
+        valor = valor * 3; //1 jarda == 3 pes
+        unidade = "Pes";
         return valor;
     }
 
-    public double metrosParaDm(){
-        valor = valor / 10;
-        unidade = "decametros";
+    public double jardasParaChain(){
+        valor = valor / 22;// 22 jarda = 1 chain
+        unidade = "Chain";
         return valor;
     }
-    public double metrosParaHm(){
-        valor = metrosParaDm() / 10;
-        unidade = "hectometros";
+
+    public double jardasParaFurlong(){
+        valor = jardasParaChain() / 10;
+        unidade = "Furlong";
         return valor;
 
     }
-    public double metrosParaKm(){
-        valor = metrosParaHm() / 10;
-        unidade = "kilometros";
+    public double jardasParaMilhas(){
+        valor = jardasParaFurlong() / 8;
+        unidade = "Milhas";
         return valor;
     }
+
+    public static double JardasParaMetros(Double jardas){
+        return jardas/ 1.0936;
+    }
+
 
     public double getValor() {
         return valor;

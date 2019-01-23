@@ -1,6 +1,6 @@
 /**
  *TODO UC1: Criar categoria de indicador                                            #DONE
- *TODO UC2: Criar indicador                                                         #DONE
+ *TODO UC2: Criar indicador
  *TODO UC3: Registar novo utilizador                                                #DONE
  *TODO UC4: Efectuar recolha de observacoes de um indicador
  *TODO UC5: Establecer planos de objetivos de um indicador
@@ -142,11 +142,12 @@ public class MainSystemGui extends Application {
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
+
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
             if(indicadorGuiController.comboBoxDialogIndicadorCategoria.getValue().equals("Uncategorized")){
-                //subsistema_negocios.inserirIndicadorSemCategoria();
+
             }
             //else
         });

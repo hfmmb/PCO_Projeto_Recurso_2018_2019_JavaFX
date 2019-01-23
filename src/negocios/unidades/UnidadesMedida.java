@@ -20,6 +20,9 @@ public abstract class UnidadesMedida {
 
     public void setUnidade(String unidade) {
         this.unidade = unidade;
+        if(!unidadesMedidaRegistadas.contains(unidade)){
+            unidadesMedidaRegistadas.add(unidade);
+        }
     }
 
     public static Set<String> getUnidadesMedidaRegistadas() {

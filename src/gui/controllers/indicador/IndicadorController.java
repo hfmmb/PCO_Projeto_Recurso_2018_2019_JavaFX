@@ -18,7 +18,8 @@ public class IndicadorController extends GuiController {
     public void setup(){
         radioButtonDialogIndicadorAutomatico.setToggleGroup(radioButtonGroup);
         radioButtonDialogIndicadorManual.setToggleGroup(radioButtonGroup);
-        radioButtonDialogIndicadorAutomatico.setSelected(true);
+        radioButtonDialogIndicadorManual.setSelected(true);
+        comboBoxDialogIndicadorExtensoes.setDisable(true);
     }
 
     //Dummy Listeners, implemented in MainSystemGui
@@ -35,10 +36,14 @@ public class IndicadorController extends GuiController {
     }
 
     public void radioButtonDialogIndicadorAutomaticoActionListener() {
-        radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {});
+        radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {
+            comboBoxDialogIndicadorExtensoes.setDisable(false);
+        });
     }
 
     public void radioButtonDialogIndicadorManualActionListener() {
-        radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {});
+        radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {
+            comboBoxDialogIndicadorExtensoes.setDisable(true);
+        });
     }
 }

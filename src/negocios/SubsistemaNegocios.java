@@ -1,7 +1,8 @@
 package negocios;
 
+import negocios.unidades.UnidadesMedidaImperial;
 import negocios.unidades.UnidadesMedidaMetrico;
-import negocios.unidades.UnidadesMedidaOutra;
+
 import java.util.*;
 
 // Fazer map indicadores em vez de lista
@@ -139,7 +140,8 @@ public class SubsistemaNegocios {
     }
     public Set<String> getUnidadesMedidaRegistadas(){
         Indicador indicador = new Indicador("Dummy", new UnidadesMedidaMetrico(0.0));
-        return indicador.getListUnidadesMedida();
+        indicador = new Indicador("Dummy", new UnidadesMedidaImperial(0.0));
+        return indicador.getSetUnidadesMedida();
 
     }
 }

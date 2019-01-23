@@ -6,43 +6,48 @@ package negocios.unidades;
 public class UnidadesMedidaMetrico extends UnidadesMedida {
     private double valor;
     private String unidade;
+
     public UnidadesMedidaMetrico(Double valor){
-        super("metros");
+        super("Metros");
         this.valor = valor;
         }
 
     public double metrosParaMm(){
         valor = metrosParaCm() * 10;
-        unidade = "milimetros";
+        unidade = "Milimetros";
         return valor;
     }
     public double metrosParaCm(){
         valor = metrosParaDec() * 10;
-        unidade = "centimetros";
+        unidade = "Centimetros";
         return valor;
 
     }
     public double metrosParaDec(){
         valor = valor * 10;
-        unidade = "decimetros";
+        unidade = "Decimetros";
         return valor;
     }
 
     public double metrosParaDm(){
         valor = valor / 10;
-        unidade = "decametros";
+        unidade = "Decametros";
     return valor;
     }
     public double metrosParaHm(){
         valor = metrosParaDm() / 10;
-        unidade = "hectometros";
+        unidade = "Hectometros";
         return valor;
 
     }
     public double metrosParaKm(){
     valor = metrosParaHm() / 10;
-    unidade = "kilometros";
+    unidade = "Kilometros";
     return valor;
+    }
+
+    public static double metrosParaJardas(Double metros){
+        return metros* 1.0936; //
     }
 
     public double getValor() {

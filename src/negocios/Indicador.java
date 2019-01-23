@@ -2,8 +2,6 @@ package negocios;
 
 import negocios.unidades.UnidadesMedida;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +31,11 @@ public class Indicador {
         this.unidadeMedida = unidadeMedida;
     }
 
-    public Set getListUnidadesMedida(){
+    public Set getSetUnidadesMedida(){
         return unidadeMedida.getUnidadesMedidaRegistadas();
+    }
+
+    public Set<HistoricoIndicador> getHistoricoIndicador() {
+        return historicoIndicador;
     }
 }
