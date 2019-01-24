@@ -29,7 +29,7 @@ public class Orientado extends Utilizador {
         return categoriasMap.get(nome);
     }
 
-public void criarNovoPlano(String valorMinimoDesejado, String valorMaximoDesejado, String designacaoIndicador, Double valorUnidade, String unidade, String nomeSupervisor) {
+public void criarNovoPlano(String valorMinimoDesejado, String valorMaximoDesejado, String designacaoIndicador,Boolean tipo, Double valorUnidade, String unidade, String nomeSupervisor) {
         Plano plano = new Plano(valorMinimoDesejado,valorMaximoDesejado, new Indicador(designacaoIndicador,valorUnidade,unidade),nomeSupervisor);
         planosSet.add(plano);
 }

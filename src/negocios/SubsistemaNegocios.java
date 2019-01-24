@@ -127,8 +127,8 @@ public class SubsistemaNegocios {
 
     public Set<String> getUnidadesMedidaRegistadas(){
         Orientado orientado = new Orientado("Dummy", "Dummy");
-        orientado.criarNovoPlano("0","1","Dummy",0.0,"Metros","Dummy");
-        orientado.criarNovoPlano("0","1","Dummy",0.0,"Milhas","Dummy");
+        orientado.criarNovoPlano("0","1","Dummy",true,0.0,"Metros","Dummy");
+        orientado.criarNovoPlano("0","1","Dummy",false,0.0,"Milhas","Dummy");
         return (Set<String>) orientado.getPlanosSet().iterator().next().getIndicador().getUnidadesMedida();
 
     }
@@ -143,7 +143,6 @@ public class SubsistemaNegocios {
         } else {
             return false;
         }
-
     }
 
     /**
@@ -232,5 +231,11 @@ public class SubsistemaNegocios {
         Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
         Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
         supervisor.desassociarOrientadoSupervisor(orientado);
+    }
+    public void addIndicador(String designacao,Boolean tipo,Double valorUnidade, String unidade){
+        Indicador.addIndicadorSet(designacao,tipo,valorUnidade,unidade);
+    }
+    public Set<Indicador> getIndicadoresRegistadosSet(){
+        return Indicador.getIndicadoresRegistadosSet();
     }
 }

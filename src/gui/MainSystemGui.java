@@ -58,7 +58,7 @@ public class MainSystemGui extends Application {
 
         FXMLLoader fxmlLoaderPlano = new FXMLLoader(getClass().getResource("controllers/plano/Plano.fxml"));
         Parent plano = fxmlLoaderPlano.load();
-        planoDialog = new Scene(plano, 500, 300);
+        planoDialog = new Scene(plano, 200, 150);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
@@ -124,15 +124,17 @@ public class MainSystemGui extends Application {
 
                 switch (checker) {
                     case 2:
+
                         System.out.println("Bem vindo Supervisor " + username + "!");
                         userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Supervisor " + username + "!");
                         userGuiController.radioButtonDialogUserSupervisor.setDisable(false);
                         window.setScene(controlPanelDialog);
                         window.setTitle("Control Panel");
                         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(false);
-
                         break;
+
                     case 1:
+
                         System.out.println("Bem vindo Orientado " + username + "!");
                         userGuiController.labelDialogUserLoginSuccess.setText("Bem vindo Orientado " + username + "!");
                         userGuiController.radioButtonDialogUserSupervisor.setDisable(true);
@@ -140,11 +142,15 @@ public class MainSystemGui extends Application {
                         window.setTitle("Control Panel");
                         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setDisable(true);
                         break;
+
                     case -1:
+
                         System.out.println("Password incorreta!");
                         userGuiController.labelDialogUserLoginSuccess.setText("Password incorreta!");
                         break;
+
                     case -2:
+
                         System.out.println("Utilizador inexistente!");
                         userGuiController.labelDialogUserLoginSuccess.setText("Utilizador inexistente!");
                         break;
@@ -162,19 +168,24 @@ public class MainSystemGui extends Application {
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
-            String username = userGuiController.textFieldDialogUserUsername.getText();
-            if (indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() == null) {
-                indicadorGuiController.labelDialogIndicadorLogin.setText(
-                        indicadorGuiController.labelDialogIndicadorLogin.getText() + username);
-                if (subsistema_negocios.getSupervisorStatus(username)) {
-                    //Supervisor
+            if(indicadorGuiController.textFieldDialogIndicadorNome.getText().length()>0 &&
+                    indicadorGuiController.comboBoxDialogIndicadorUnidades.getSelectionModel().getSelectedItem() != null &&
+                    indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() != null){
+            String designacao = indicadorGuiController.textFieldDialogIndicadorNome.getText();
+            String unidade = indicadorGuiController.comboBoxDialogIndicadorUnidades.getSelectionModel().getSelectedItem().toString();
 
-                } else {
-                    //Orientado
+                if(indicadorGuiController.radioButtonDialogIndicadorAutomatico.isSelected()) {
+                    subsistema_negocios.addIndicador(designacao, true, null, unidade);
+                    System.out.println("Indicador automatico criado com sucesso!");
 
+                }else{
+                    subsistema_negocios.addIndicador(designacao,false,0.0,unidade);
+                    System.out.println("Indicador manual criado com sucesso!");
                 }
-                System.out.println("Indicador sem categoria criado com sucesso!");
 
+            }
+            else{
+                System.out.println("Existem campos nao preenchidos!");
             }
         });
 
@@ -185,6 +196,7 @@ public class MainSystemGui extends Application {
             userGuiController.textFieldDialogUserEspecialidade.clear();
             userGuiController.labelDialogUserLoginSuccess.setText("Introduza as suas credenciais abaixo.");
         });
+
         categoriaGuiController.buttonDialogCategoriaVoltar.setOnAction(actionEvent -> {
             window.setScene(controlPanelDialog);
             categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().clear();
@@ -198,7 +210,7 @@ public class MainSystemGui extends Application {
                 if (categoriaGuiController.radioButtonDialogCategoriaOrientado.isSelected()) {//Orientado insere categoria em si mesmo
                     subsistema_negocios.inserirCategoriaComoOrientado(username, nomeCategoria);
                     System.out.println("Nova categoria criada com sucesso para o orientado "+username+"!");
-;
+
                 } else if (categoriaGuiController.radioButtonDialogCategoriaSupervisor.isSelected()) {//Supervisor insere categoria no sistema
                     subsistema_negocios.inserirCategoriaComoSupervisor(username, nomeCategoria);
                     System.out.println("Nova categoria criada com sucesso no sistema pelo supervisor "+username+"!");
@@ -211,14 +223,11 @@ public class MainSystemGui extends Application {
             }
         });
 
-
         controlPanelGuiController.buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {
             window.setScene(indicadorDialog);
             indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
                     subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
-
         });
-
 
       controlPanelGuiController.buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
           window.setScene(categoriaDialog);
@@ -239,10 +248,9 @@ public class MainSystemGui extends Application {
 
         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setOnAction(actionEvent -> {
             window.setScene(planoDialog);
+            planoGuiController.comboBoxDialogPlanoIndicador.getItems().addAll(subsistema_negocios.getIndicadoresRegistadosSet());
 
         });
-
-
 
         planoGuiController.buttonDialogPlanoCriar.setOnAction(actionEvent -> {
 
@@ -255,7 +263,6 @@ public class MainSystemGui extends Application {
             window.setScene(controlPanelDialog);
 
         });
-
         }
 
     public static void main(String[] args) {
