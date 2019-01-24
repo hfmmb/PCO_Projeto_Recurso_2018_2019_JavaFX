@@ -22,7 +22,7 @@ public class Indicador {
     }
 
     public Indicador(String designacao, String unidade){
-        this.designacao = "Automatic Indicador " + designacao;
+        this.designacao = "Automatico Indicador " + designacao;
         this.tipo = true;
         this.unidadeMedida = criarUnidadeMedida(0.0, unidade);
         historicoObservacoesIndicadorSet.add(new Observacao("0.0", unidade));
