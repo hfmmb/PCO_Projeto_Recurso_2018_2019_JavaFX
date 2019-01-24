@@ -3,7 +3,6 @@ package negocios.unidades;
 import java.util.HashSet;
 import java.util.Set;
 
-//Por em set
 public abstract class UnidadesMedida {
     private static Set<String> unidadesMedidaRegistadas = new HashSet<>();
     protected String unidade;

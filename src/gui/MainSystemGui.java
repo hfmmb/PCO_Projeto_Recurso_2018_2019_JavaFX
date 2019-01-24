@@ -1,4 +1,4 @@
-/**
+/*
  *TODO UC1: Criar categoria de indicador                                            #DONE
  *TODO UC2: Criar indicador
  *TODO UC3: Registar novo utilizador                                                #DONE
@@ -7,7 +7,7 @@
  *TODO UC6: Consultar historico de observacoes de um indicador
  *TODO UC7: Comparar desempenho de um indicador em relacao ao plano establecido
  *TODO UC8: Criar versao alternativa a um plano de um indicador
- *TODO UC9: Associar Supervisor a um orientado
+ *TODO UC9: Associar Supervisor a um orientado                                      #DONE
  *TODO UC10: Fornecer informacao tecnica sobre o cumprimento de um plano
  *TODO UC11: Autenticar utilizador                                                  #DONE
  * @autor: Hélder Filipe Mendonça de Medeiros Braga
@@ -27,8 +27,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import negocios.SubsistemaNegocios;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class MainSystemGui extends Application {
@@ -43,34 +41,29 @@ public class MainSystemGui extends Application {
 
         FXMLLoader fxmlLoaderUser = new FXMLLoader(getClass().getResource("controllers/user/User.fxml"));
         Parent root = fxmlLoaderUser.load();
-        loginRegisterDialog = new Scene(root, 350, 250);
+        loginRegisterDialog = new Scene(root, 320, 250);
 
         FXMLLoader fxmlLoaderIndicador = new FXMLLoader(getClass().getResource("controllers/indicador/Indicador.fxml"));
         Parent indicador = fxmlLoaderIndicador.load();
-        indicadorDialog = new Scene(indicador, 600, 300);
+        indicadorDialog = new Scene(indicador, 500, 300);
 
         FXMLLoader fxmlLoaderControlPanel = new FXMLLoader(getClass().getResource("controllers/controlPanel/ControlPanel.fxml"));
         Parent controlPanel = fxmlLoaderControlPanel.load();
-        controlPanelDialog = new Scene(controlPanel, 300, 300);
+        controlPanelDialog = new Scene(controlPanel, 200, 200);
 
         FXMLLoader fxmlLoaderCategoria = new FXMLLoader(getClass().getResource("controllers/categoria/Categoria.fxml"));
         Parent categoria = fxmlLoaderCategoria.load();
-        categoriaDialog = new Scene(categoria, 300, 300);
+        categoriaDialog = new Scene(categoria, 260, 220);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
 
         window.show();
 
-
         UserController userGuiController = fxmlLoaderUser.getController();//Aponta para controller da janela User
         IndicadorController indicadorGuiController = fxmlLoaderIndicador.getController();//Aponta para controller da janela Indicador
         ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
         CategoriaController categoriaGuiController = fxmlLoaderCategoria.getController();
-
-        indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
-                subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
-        //indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().select(5); //Seleciona a categoria "Uncategorized\Sem categoria"
 
         indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
                 subsistema_negocios.getUnidadesMedidaRegistadas());
@@ -159,6 +152,7 @@ public class MainSystemGui extends Application {
         indicadorGuiController.buttonDialogIndicadorCancel.setOnAction(actionEvent -> {
             window.setScene(controlPanelDialog);
             window.setTitle("Login");
+            indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().clear();
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
@@ -183,6 +177,7 @@ public class MainSystemGui extends Application {
         });
         categoriaGuiController.buttonDialogCategoriaVoltar.setOnAction(actionEvent -> {
             window.setScene(controlPanelDialog);
+            categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().clear();
         });
 
         categoriaGuiController.buttonDialogCategoriaCriar.setOnAction(actionEvent -> {
@@ -209,14 +204,27 @@ public class MainSystemGui extends Application {
 
         controlPanelGuiController.buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {
             window.setScene(indicadorDialog);
+            indicadorGuiController.comboBoxDialogIndicadorCategoria.getItems().addAll(
+                    subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
+
         });
 
 
       controlPanelGuiController.buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
           window.setScene(categoriaDialog);
-          Set<String> set = subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText());
-
-          categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().addAll(set);
+          if(subsistema_negocios.getSupervisorStatus(userGuiController.textFieldDialogUserUsername.getText())) {
+              Set<String> set = subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText());
+              categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().addAll(set);
+              categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(false);
+              categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(true);
+              categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(false);
+              categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(false);
+          } else {
+              categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(true);
+              categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(false);
+              categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(true);
+              categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(true);
+          }
             });
         }
 

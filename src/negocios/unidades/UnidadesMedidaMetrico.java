@@ -1,11 +1,12 @@
 package negocios.unidades;
 
+import java.util.Set;
+
 /**
  * Classe responsavel por manter unidades do sistema metrico e fazer conversoes das mesmas
  */
 public class UnidadesMedidaMetrico extends UnidadesMedida {
     private double valor;
-    private String unidade;
 
     public UnidadesMedidaMetrico(Double valor){
         super("Metros");
@@ -58,4 +59,7 @@ public class UnidadesMedidaMetrico extends UnidadesMedida {
         this.valor = valor;
     }
 
+    public Set<String> getUnidadesMedidaEmRegisto() {
+        return UnidadesMedida.getUnidadesMedidaRegistadas();
+    }
 }

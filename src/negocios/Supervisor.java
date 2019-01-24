@@ -22,7 +22,7 @@ public class Supervisor extends Utilizador {
      * @param orientado
      */
     protected void inserirCategoriaOrientado(String nomeCategoria, Orientado orientado) {
-        orientado.adicionarCategoria(new Categoria(nomeCategoria)); //Adiciona uma categoria ao orientado
+        orientado.adicionarCategoria(nomeCategoria); //Adiciona uma categoria ao orientado
         insertCategoria(nomeCategoria); //Atualiza o mapa de todas as categorias
     }
     /**

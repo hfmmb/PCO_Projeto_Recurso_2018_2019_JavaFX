@@ -1,11 +1,13 @@
 package negocios.unidades;
 
+import java.util.Set;
+
 /**
  * Classe responsavel por manter unidades do sistema imperial e fazer conversoes das mesmas
  */
 public class UnidadesMedidaImperial extends UnidadesMedida {
     private double valor;
-    private String unidade;
+
     public UnidadesMedidaImperial(Double valor){
         super("Jardas");
         this.valor = valor;
@@ -50,8 +52,12 @@ public class UnidadesMedidaImperial extends UnidadesMedida {
         return valor;
     }
 
+
     public void setValor(double valor) {
         this.valor = valor;
     }
 
+    public Set<String> getUnidadesMedidaEmRegisto() {
+        return UnidadesMedida.getUnidadesMedidaRegistadas();
+    }
 }

@@ -7,14 +7,13 @@ import java.util.Set;
 
 public class Orientado extends Utilizador {
     private Map<String,Categoria> categoriasMap = new HashMap<>();
-    private Set<Indicador> indicadoresSemCategoriaSet = new HashSet<>();
-    private Map<Categoria,Indicador> indicadoresComCategoria = new HashMap<>();
+    private Set<Plano> planosSet = new HashSet<>();
     public Orientado(String utilizador, String password){
         super(utilizador, password);
     }
 
-    public void adicionarCategoria(Categoria categoria) {
-        String nome = categoria.getNome();
+    public void adicionarCategoria(String nome) {
+        Categoria categoria = new Categoria(nome);
         categoriasMap.putIfAbsent(nome,categoria);
         insertCategoria(nome);
     }
@@ -30,13 +29,12 @@ public class Orientado extends Utilizador {
         return categoriasMap.get(nome);
     }
 
-    public Map<Categoria, Indicador> getIndicadoresComCategoria() {
-        return indicadoresComCategoria;
-    }
-
-    public Set<Indicador> getIndicadoresSemCategoriaSet() {
-        return indicadoresSemCategoriaSet;
-    }
-
+public void criarNovoPlano(String valorMinimoDesejado, String valorMaximoDesejado, String designacaoIndicador, Double valorUnidade, String unidade, String nomeSupervisor) {
+        Plano plano = new Plano(valorMinimoDesejado,valorMaximoDesejado, new Indicador(designacaoIndicador,valorUnidade,unidade),nomeSupervisor);
+        planosSet.add(plano);
+}
+public Set<Plano> getPlanosSet(){
+        return planosSet;
+}
 
 }

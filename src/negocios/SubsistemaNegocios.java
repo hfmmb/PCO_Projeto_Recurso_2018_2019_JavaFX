@@ -14,7 +14,6 @@ import java.util.*;
 public class SubsistemaNegocios {
     private static SubsistemaNegocios subsistema_negocios = null;
     private Map<String,Utilizador> utilizadoresRegistadosMap = new HashMap();
-    private Map<String,List<Object>> supervisorOrientadosMap = new HashMap<>();//Formato: (String key=Supervisor.name,(Supervisor, Orientado[]))
 
     /**
      * Retorna a instancia da classe de negocios visto que esta utiliza o padrao de desenho Singleton
@@ -51,11 +50,12 @@ public class SubsistemaNegocios {
         Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get("Paul");
 
         //Inicializar algumas categorias no sistema no orientado...
-        orientado.adicionarCategoria(new Categoria("Saude Geral"));
-        orientado.adicionarCategoria(new Categoria("Saude Cardiaca"));
-        orientado.adicionarCategoria(new Categoria("Boa Forma"));
-        orientado.adicionarCategoria(new Categoria("Brevet"));
-        orientado.adicionarCategoria(new Categoria("Preparacao para maratona"));
+
+        orientado.adicionarCategoria("Brevet");
+        orientado.adicionarCategoria("Saude Geral");
+        orientado.adicionarCategoria("Saude Cardiaca");
+        orientado.adicionarCategoria("Boa Forma");
+        orientado.adicionarCategoria("Preparacao para maratona");
 
         //Associa alguns orientados a um supervisor
         supervisor.associarOrientadoSupervisor(orientado);
@@ -125,37 +125,11 @@ public class SubsistemaNegocios {
         return Utilizador.getTodasCategoriasRegistadas();
     }
 
-    /**
-     * Associa um supervisor a um orientado
-     * @param supervisor
-     * @param orientado
-     */
-    public void associarSupervisorOrientado(Supervisor supervisor, Orientado orientado){
-
-        if(supervisorOrientadosMap.get(supervisor.getUtilizador()).size()>1){
-            List<Object> list = supervisorOrientadosMap.get(supervisor.getUtilizador());
-            list.add(orientado);
-            supervisorOrientadosMap.replace(supervisor.getUtilizador(),list);
-        }
-    }
-
-    /**
-     * Desassocia um supervisor a um orientado
-     * @param supervisor
-     * @param orientado
-     */
-    public void desassociarSupervisorOrientado(Supervisor supervisor, Orientado orientado){
-
-        if(supervisorOrientadosMap.get(supervisor.getUtilizador()).size()>1){
-            List<Object> list = supervisorOrientadosMap.get(supervisor.getUtilizador());
-            list.remove(orientado);
-            supervisorOrientadosMap.replace(supervisor.getUtilizador(),list);
-        }
-    }
     public Set<String> getUnidadesMedidaRegistadas(){
-        Indicador indicador = new Indicador("Dummy", new UnidadesMedidaMetrico(0.0));
-        indicador = new Indicador("Dummy", new UnidadesMedidaImperial(0.0));
-        return indicador.getSetUnidadesMedida();
+        Orientado orientado = new Orientado("Dummy", "Dummy");
+        orientado.criarNovoPlano("0","1","Dummy",0.0,"Metros","Dummy");
+        orientado.criarNovoPlano("0","1","Dummy",0.0,"Milhas","Dummy");
+        return (Set<String>) orientado.getPlanosSet().iterator().next().getIndicador().getUnidadesMedida();
 
     }
 

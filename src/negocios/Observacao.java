@@ -6,10 +6,12 @@ import java.util.Date;
 public class Observacao {
     private Timestamp timestamp;
     private String observacao;
-    public Observacao(String observacao){
+    private String usernameSupervisor;
+    public Observacao(String observacao, String usernameSupervisor){
         Date dateNow = new Date();
         this.timestamp = new Timestamp(dateNow.getTime());
         this.observacao = observacao;
+        this.usernameSupervisor = usernameSupervisor;
     }
 
     public void setObservacao(String observacao) {

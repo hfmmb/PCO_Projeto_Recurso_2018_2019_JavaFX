@@ -43,5 +43,4 @@
       <RadioButton fx:id="radioButtonDialogIndicadorManual" mnemonicParsing="false" onAction="#radioButtonDialogIndicadorManualActionListener" text="Manual" GridPane.columnIndex="2" GridPane.rowIndex="3" />
       <RadioButton fx:id="radioButtonDialogIndicadorAutomatico" onAction="#radioButtonDialogIndicadorAutomaticoActionListener" text="Automatico" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <TextField fx:id="textFieldDialogIndicadorNome" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-   <Label fx:id="labelDialogIndicadorLogin" alignment="CENTER" contentDisplay="CENTER" text="Entrou como " GridPane.columnIndex="2" />
    </GridPane>

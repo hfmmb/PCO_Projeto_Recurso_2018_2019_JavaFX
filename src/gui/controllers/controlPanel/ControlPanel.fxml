@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.controlPanel.ControlPanelController">
   <columnConstraints>
     <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
@@ -31,10 +30,10 @@
                </font>
             </Label>
          <Label fx:id="labelDialogControlPanelLogin" alignment="CENTER" contentDisplay="CENTER" text="Entrou como " />
-         <Button fx:id="buttonDialogControlPanelCriarIndicadores" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Criar Indicadores" onAction="#buttonDialogControlPanelCriarIndicadoresActionListener"/>
-         <Button fx:id="buttonDialogControlPanelCriarCategoria" mnemonicParsing="false" text="Criar Categoria Orientado" />
-         <Button fx:id="buttonDialogControlPanelCriarPlanosOrientado" mnemonicParsing="false" text="Criar Planos" onAction="#buttonDialogControlPanelCriarPlanosOrientadoActionListener" />
-         <Button fx:id="buttonDialogControlPanelConsultarPlanosOrientado" mnemonicParsing="false" text="Consultar planos" onAction="#buttonDialogControlPanelConsultarPlanosOrientadoActionListener"/>
-               <Button fx:id="buttonDialogControlPanelVoltar" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogControlPanelVoltarActionListener" text="Voltar" textAlignment="CENTER" />
+         <Button fx:id="buttonDialogControlPanelCriarIndicadores" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonDialogControlPanelCriarIndicadoresActionListener" prefWidth="140.0" text="Criar Indicadores" />
+         <Button fx:id="buttonDialogControlPanelCriarCategoria" mnemonicParsing="false" prefWidth="140.0" text="Criar Categoria" />
+         <Button fx:id="buttonDialogControlPanelCriarPlanosOrientado" mnemonicParsing="false" onAction="#buttonDialogControlPanelCriarPlanosOrientadoActionListener" prefWidth="140.0" text="Criar Planos" />
+         <Button fx:id="buttonDialogControlPanelConsultarPlanosOrientado" mnemonicParsing="false" onAction="#buttonDialogControlPanelConsultarPlanosOrientadoActionListener" prefWidth="140.0" text="Consultar planos" />
+               <Button fx:id="buttonDialogControlPanelVoltar" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogControlPanelVoltarActionListener" prefWidth="70.0" text="Voltar" textAlignment="CENTER" />
    </VBox>
    </GridPane>
