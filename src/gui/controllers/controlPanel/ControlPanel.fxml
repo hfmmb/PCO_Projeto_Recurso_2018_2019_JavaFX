@@ -33,9 +33,9 @@
          <Button fx:id="buttonDialogControlPanelCriarCategoria" mnemonicParsing="false" prefWidth="230.0" text="Criar Categoria" />
          <Button fx:id="buttonDialogControlPanelCriarPlanosOrientado" mnemonicParsing="false" onAction="#buttonDialogControlPanelCriarPlanosOrientadoActionListener" prefWidth="230.0" text="Criar Planos" />
          <Button fx:id="buttonDialogControlPanelConsultarPlanosOrientado" mnemonicParsing="false" onAction="#buttonDialogControlPanelConsultarPlanosOrientadoActionListener" prefWidth="230.0" text="Consultar planos" />
-      <Button fx:id="buttonDialogControlPanelFazerObservacaoPlano" layoutX="20.0" layoutY="187.0" mnemonicParsing="false" onAction="#buttonDialogControlPanelFazerObservacaoPlanoActionListener" prefWidth="230.0" text="Fazer Observacao Plano" />
       <Button fx:id="buttonDialogControlPanelAssociarSupervisorOrientado" layoutX="40.0" layoutY="109.0" mnemonicParsing="false" onAction="#buttonDialogControlPanelAssociarSupervisorOrientadoActionListener" prefWidth="230.0" text="Associar Supervisor a Orientado" />
       <Button fx:id="buttonDialogControlPanelConsultarHistoricoIndicador" layoutX="20.0" layoutY="135.0" mnemonicParsing="false" onAction="#buttonDialogControlPanelConsultarHistoricoIndicadorActionListener" prefWidth="230.0" text="Consultar Historico Indicador" />
+      <Button fx:id="buttonDialogControlPanelTerminal" layoutX="20.0" layoutY="187.0" mnemonicParsing="false" onAction="#buttonDialogControlPanelTerminalActionListener" prefWidth="230.0" text="Terminal" />
        <Button fx:id="buttonDialogControlPanelVoltar" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogControlPanelVoltarActionListener" prefWidth="115.0" text="Voltar" textAlignment="CENTER" />
    </VBox>
    </GridPane>

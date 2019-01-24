@@ -51,11 +51,11 @@ public class SubsistemaNegocios {
 
         //Inicializar algumas categorias no sistema no orientado...
 
+        orientado.adicionarCategoria("Boa Forma");
         orientado.adicionarCategoria("Brevet");
+        orientado.adicionarCategoria("Preparacao para maratona");
         orientado.adicionarCategoria("Saude Geral");
         orientado.adicionarCategoria("Saude Cardiaca");
-        orientado.adicionarCategoria("Boa Forma");
-        orientado.adicionarCategoria("Preparacao para maratona");
 
         //Associa alguns orientados a um supervisor
         supervisor.associarOrientadoSupervisor(orientado);
@@ -125,28 +125,32 @@ public class SubsistemaNegocios {
         return Utilizador.getTodasCategoriasRegistadas();
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<String> getUnidadesMedidaRegistadas(){
         Orientado orientado = new Orientado("Dummy", "Dummy");
         orientado.criarNovoPlano("0","1","Dummy",true,0.0,"Metros","Dummy");
         orientado.criarNovoPlano("0","1","Dummy",false,0.0,"Milhas","Dummy");
-        return (Set<String>) orientado.getPlanosSet().iterator().next().getIndicador().getUnidadesMedida();
+        return orientado.getPlanosSet().iterator().next().getIndicador().getUnidadesMedida();
 
     }
 
     /**
      * Retorna true se o username dado pertence a um supervisor, false se pertence a um orientado
-     * @return
+     * @return True se for um Supervisor, False se for um Orientado
      */
     public boolean getSupervisorStatus(String username){
-        if(utilizadoresRegistadosMap.get(username) instanceof Supervisor){
-            return true;
-        } else {
-            return false;
+         return utilizadoresRegistadosMap.get(username) instanceof Supervisor;
         }
-    }
 
     /**
      * Insere uma categoria num orientado como supervisor
+     * @param usernameSupervisor Username do supervisor
+     * @param usernameOrientado Username do orientado
+     * @param nomeCategoria Nome da categoria
+     * @return True se foi inserida a categoria, false caso nao aconteça
      */
     public boolean inserirCategoriaEmOrientadoComoSupervisor(String usernameSupervisor, String usernameOrientado, String nomeCategoria){
         if (utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor && utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado) {
@@ -160,9 +164,9 @@ public class SubsistemaNegocios {
 
     /**
      * Insere uma categoria como utilizador do tipo supervisor retorna true caso tenha sucesso, caso contrario retorna false
-     * @param usernameSupervisor
-     * @param nomeCategoria
-     * @return
+     * @param usernameSupervisor Username do supervisor
+     * @param nomeCategoria Nome da categoria
+     * @return True caso o username dado pertenca a um supervisor e a categoria tenha sido inserida, false caso contrario
      */
     public boolean inserirCategoriaComoSupervisor(String usernameSupervisor, String nomeCategoria) {
         if(utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor){
@@ -175,9 +179,9 @@ public class SubsistemaNegocios {
 
     /**
      * Insere uma categoria como utilizador do tipo orientado retorna true caso tenha sucesso, caso contrario retorna false
-     * @param usernameOrientado
-     * @param nomeCategoria
-     * @return
+     * @param usernameOrientado Username do Orientado
+     * @param nomeCategoria Nome da categoria
+     * @return True se o username for de um utilizador do tipo orientado e a categoria tenha sido inserida, false se tal nao acontece
      */
         public boolean inserirCategoriaComoOrientado(String usernameOrientado, String nomeCategoria){
             if(utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado){
@@ -190,8 +194,8 @@ public class SubsistemaNegocios {
 
     /**
      * Obtem os orientados associados a um determinado supervisor
-     * @param usernameSupervisor
-     * @return
+     * @param usernameSupervisor Username do supervisor
+     * @return Set de Orientados associados ao supervisor
      */
     public Set<Orientado> getOrientadosSupervisor(String usernameSupervisor){
             Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
@@ -201,8 +205,8 @@ public class SubsistemaNegocios {
 
     /**
      * Obtem o username dos orientados associados a um determinado supervisor
-     * @param usernameSupervisor
-     * @return
+     * @param usernameSupervisor Username do supervisor
+     * @return Set de usernames de orientados associados ao supervisor
      */
     public Set<String> getOrientadosSupervisorUsername(String usernameSupervisor){
         Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
@@ -212,8 +216,8 @@ public class SubsistemaNegocios {
 
     /**
      * Associa um determinado orientado a um supervisor
-     * @param usernameSupervisor
-     * @param usernameOrientado
+     * @param usernameSupervisor Username do supervisor
+     * @param usernameOrientado Username do orientado
      */
 
     public void associarOrientadoSupervisor(String usernameSupervisor, String usernameOrientado){
@@ -224,8 +228,8 @@ public class SubsistemaNegocios {
 
     /**
      * Desassocia um determinado orientado de um supervisor
-     * @param usernameSupervisor
-     * @param usernameOrientado
+     * @param usernameSupervisor Username do supervisor
+     * @param usernameOrientado Username do orientado
      */
     public void desassociarOrientadosSupervisor(String usernameSupervisor, String usernameOrientado){
         Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
@@ -237,5 +241,58 @@ public class SubsistemaNegocios {
     }
     public Set<Indicador> getIndicadoresRegistadosSet(){
         return Indicador.getIndicadoresRegistadosSet();
+    }
+
+    public void terminalMode(){
+        /*
+         *TODO UC4: Efectuar recolha de observacoes de um indicador
+         *TODO UC5: Establecer planos de objetivos de um indicador
+         *TODO UC6: Consultar historico de observacoes de um indicador
+         */
+        Scanner scanner = new Scanner(System.in);
+        int opcao = -1;
+        while (opcao != 0){
+        System.out.println("[1] Associar Supervisor Orientado               [2] Desassociar Supervisor Orientado\n" +
+                           "[3] Recolher observacao indicador               [4] Establecer plano objetivos indicador\n" +
+                           "[5] Consultar historico observacoes indicador\n\nSelecione uma opcao: ");
+        opcao = scanner.nextInt();
+        switch (opcao){
+            case 1:
+                System.out.print("Introduza o username do orientado: ");
+                String usernameOrientado = scanner.next();
+                System.out.print("Introduza o username do supervisor: ");
+                String usernameSupervisor = scanner.next();
+                if (utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor && utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado) {
+                    associarOrientadoSupervisor(usernameSupervisor, usernameOrientado);
+                    System.out.println("O orientado " + usernameOrientado + " foi associado ao supervisor " + usernameSupervisor);
+                }
+                else{
+                    System.out.println("Os dados fornecidos sao invalidos");
+                }
+                break;
+
+            case 2:
+                System.out.print("Introduza o username do orientado: ");
+                usernameOrientado = scanner.next();
+                System.out.print("Introduza o username do supervisor: ");
+                usernameSupervisor = scanner.next();
+                if (utilizadoresRegistadosMap.get(usernameSupervisor) instanceof Supervisor && utilizadoresRegistadosMap.get(usernameOrientado) instanceof Orientado) {
+                    desassociarOrientadosSupervisor(usernameSupervisor, usernameOrientado);
+                    System.out.println("O orientado " + usernameOrientado + " foi desassociado do supervisor " + usernameSupervisor);
+                }
+                else{
+                    System.out.println("Os dados fornecidos sao invalidos");
+                }
+                break;
+
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+        }
+        }
     }
 }

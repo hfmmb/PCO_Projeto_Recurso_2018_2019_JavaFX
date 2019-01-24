@@ -11,7 +11,7 @@ public class ControlPanelController extends GuiController {
     public Button buttonDialogControlPanelConsultarPlanosOrientado;
     public Button buttonDialogControlPanelCriarIndicadores;
     public Button buttonDialogControlPanelCriarCategoria;
-    public Button buttonDialogControlPanelFazerObservacaoPlano;
+    public Button buttonDialogControlPanelTerminal;
     public Button buttonDialogControlPanelAssociarSupervisorOrientado;
     public Button buttonDialogControlPanelConsultarHistoricoIndicador;
 
@@ -32,11 +32,6 @@ public class ControlPanelController extends GuiController {
         buttonDialogControlPanelCriarIndicadores.setOnAction(actionEvent -> {});
     }
 
-    public void buttonDialogControlPanelFazerObservacaoPlanoActionListener(){
-        buttonDialogControlPanelFazerObservacaoPlano.setOnAction(actionEvent -> {
-        });
-    }
-
     public void buttonDialogControlPanelAssociarSupervisorOrientadoActionListener(){
     buttonDialogControlPanelAssociarSupervisorOrientado.setOnAction(actionEvent -> {
     });
@@ -49,6 +44,12 @@ public class ControlPanelController extends GuiController {
     public void buttonDialogControlPanelCriarCategoriaActionListener(){
         buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
 
+        });
+    }
+
+
+    public void buttonDialogControlPanelTerminalActionListener(){
+        buttonDialogControlPanelTerminal.setOnAction(actionEvent -> {
         });
     }
 }

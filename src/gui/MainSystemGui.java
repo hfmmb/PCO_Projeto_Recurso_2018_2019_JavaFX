@@ -1,15 +1,15 @@
 /*
- *TODO UC1: Criar categoria de indicador                                            #DONE
- *TODO UC2: Criar indicador
- *TODO UC3: Registar novo utilizador                                                #DONE
+ *UC1: Criar categoria de indicador                                            #DONE
+ *UC2: Criar indicador                                                         #DONE
+ *UC3: Registar novo utilizador                                                #DONE
  *TODO UC4: Efectuar recolha de observacoes de um indicador
  *TODO UC5: Establecer planos de objetivos de um indicador
  *TODO UC6: Consultar historico de observacoes de um indicador
- *TODO UC7: Comparar desempenho de um indicador em relacao ao plano establecido
- *TODO UC8: Criar versao alternativa a um plano de um indicador
- *TODO UC9: Associar Supervisor a um orientado                                      #DONE
- *TODO UC10: Fornecer informacao tecnica sobre o cumprimento de um plano
- *TODO UC11: Autenticar utilizador                                                  #DONE
+ *UC7: Comparar desempenho de um indicador em relacao ao plano establecido     #DNI
+ *UC8: Criar versao alternativa a um plano de um indicador                     #DNI
+ *UC9: Associar Supervisor a um orientado                                      #DONE
+ *UC10: Fornecer informacao tecnica sobre o cumprimento de um plano            #DNI
+ *UC11: Autenticar utilizador                                                  #DONE
  * @autor: Hélder Filipe Mendonça de Medeiros Braga
  * @since: 19/01/2019
  */
@@ -33,7 +33,7 @@ import java.util.Set;
 
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog,historicoIndicadorDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog, historicoIndicadorDialog; //Layout das diferentes janelas
     @Override
     public void start(Stage primaryStage) throws Exception {
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
@@ -279,7 +279,11 @@ public class MainSystemGui extends Application {
 
 
         });
+    controlPanelGuiController.buttonDialogControlPanelTerminal.setOnAction(actionEvent -> {
+        subsistema_negocios.terminalMode();
+    });
     }
+
     public static void main(String[] args) {
         launch(args);
     }
