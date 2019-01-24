@@ -19,6 +19,7 @@ package gui;
 import gui.controllers.categoria.CategoriaController;
 import gui.controllers.controlPanel.ControlPanelController;
 import gui.controllers.indicador.IndicadorController;
+import gui.controllers.plano.PlanoController;
 import gui.controllers.user.UserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ import java.util.Set;
 
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog; //Layout das diferentes janelas
     @Override
     public void start(Stage primaryStage) throws Exception {
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
@@ -55,6 +56,10 @@ public class MainSystemGui extends Application {
         Parent categoria = fxmlLoaderCategoria.load();
         categoriaDialog = new Scene(categoria, 260, 220);
 
+        FXMLLoader fxmlLoaderPlano = new FXMLLoader(getClass().getResource("controllers/plano/Plano.fxml"));
+        Parent plano = fxmlLoaderPlano.load();
+        planoDialog = new Scene(plano, 500, 300);
+
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
 
@@ -64,6 +69,7 @@ public class MainSystemGui extends Application {
         IndicadorController indicadorGuiController = fxmlLoaderIndicador.getController();//Aponta para controller da janela Indicador
         ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
         CategoriaController categoriaGuiController = fxmlLoaderCategoria.getController();
+        PlanoController planoGuiController = fxmlLoaderPlano.getController();
 
         indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
                 subsistema_negocios.getUnidadesMedidaRegistadas());
@@ -72,7 +78,7 @@ public class MainSystemGui extends Application {
         indicadorGuiController.setup();
         controlPanelGuiController.setup();
         categoriaGuiController.setup();
-
+        planoGuiController.setup();
 
         userGuiController.buttonDialogUserRegister.setOnAction(actionEvent -> {
             /*
@@ -174,6 +180,10 @@ public class MainSystemGui extends Application {
 
         controlPanelGuiController.buttonDialogControlPanelVoltar.setOnAction(actionEvent -> {
             window.setScene(loginRegisterDialog);
+            userGuiController.textFieldDialogUserUsername.clear();
+            userGuiController.passwordFieldDialogUserPassword.clear();
+            userGuiController.textFieldDialogUserEspecialidade.clear();
+            userGuiController.labelDialogUserLoginSuccess.setText("Introduza as suas credenciais abaixo.");
         });
         categoriaGuiController.buttonDialogCategoriaVoltar.setOnAction(actionEvent -> {
             window.setScene(controlPanelDialog);
@@ -226,6 +236,15 @@ public class MainSystemGui extends Application {
               categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(true);
           }
             });
+
+        planoGuiController.buttonDialogPlanoCriar.setOnAction(actionEvent -> {
+
+        });
+        planoGuiController.buttonDialogPlanoCancel.setOnAction(actionEvent -> {
+            planoGuiController.comboBoxDialogPlanoIndicador.getItems().clear();
+
+        });
+
         }
 
     public static void main(String[] args) {
