@@ -22,7 +22,8 @@ public class PlanoController extends GuiController {
     }
 
     public void buttonDialogPlanoCancelActionListener() {
-        buttonDialogPlanoCancel.setOnAction(actionEvent -> {});// Dummy, implemented in MainSystemGui
+        buttonDialogPlanoCancel.setOnAction(actionEvent -> {
+        });// Dummy, implemented in MainSystemGui
     }
 
     public void textFieldDialogPlanoValorMinimoActionListener(){

@@ -237,11 +237,22 @@ public class MainSystemGui extends Application {
           }
             });
 
+        controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setOnAction(actionEvent -> {
+            window.setScene(planoDialog);
+
+        });
+
+
+
         planoGuiController.buttonDialogPlanoCriar.setOnAction(actionEvent -> {
 
         });
         planoGuiController.buttonDialogPlanoCancel.setOnAction(actionEvent -> {
+
             planoGuiController.comboBoxDialogPlanoIndicador.getItems().clear();
+            planoGuiController.textFieldDialogPlanoValorMinimo.clear();
+            planoGuiController.textFieldDialogPlanoValorMaximo.clear();
+            window.setScene(controlPanelDialog);
 
         });
 

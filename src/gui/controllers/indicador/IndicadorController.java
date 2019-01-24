@@ -38,13 +38,13 @@ public class IndicadorController extends GuiController {
 
     public void radioButtonDialogIndicadorAutomaticoActionListener() {
         radioButtonDialogIndicadorAutomatico.setOnAction(actionEvent -> {
-            comboBoxDialogIndicadorExtensoes.setDisable(false);
+            comboBoxDialogIndicadorExtensoes.setDisable(true);
         });
     }
 
     public void radioButtonDialogIndicadorManualActionListener() {
         radioButtonDialogIndicadorManual.setOnAction(actionEvent -> {
-            comboBoxDialogIndicadorExtensoes.setDisable(true);
+            comboBoxDialogIndicadorExtensoes.setDisable(false);
         });
     }
 }
