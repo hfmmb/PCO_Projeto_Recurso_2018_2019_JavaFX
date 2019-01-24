@@ -13,7 +13,6 @@ public class IndicadorController extends GuiController {
     public ComboBox comboBoxDialogIndicadorExtensoes;
     public ComboBox comboBoxDialogIndicadorUnidades;
     public TextField textFieldDialogIndicadorNome;
-    public Label labelDialogIndicadorLogin;
     private ToggleGroup radioButtonGroup = new ToggleGroup();
 
     public void setup(){

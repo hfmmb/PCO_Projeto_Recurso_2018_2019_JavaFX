@@ -18,6 +18,7 @@ package gui;
 
 import gui.controllers.categoria.CategoriaController;
 import gui.controllers.controlPanel.ControlPanelController;
+import gui.controllers.historicoIndicador.HistoricoIndicadorController;
 import gui.controllers.indicador.IndicadorController;
 import gui.controllers.plano.PlanoController;
 import gui.controllers.user.UserController;
@@ -32,7 +33,7 @@ import java.util.Set;
 
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog,historicoIndicadorDialog; //Layout das diferentes janelas
     @Override
     public void start(Stage primaryStage) throws Exception {
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
@@ -50,7 +51,7 @@ public class MainSystemGui extends Application {
 
         FXMLLoader fxmlLoaderControlPanel = new FXMLLoader(getClass().getResource("controllers/controlPanel/ControlPanel.fxml"));
         Parent controlPanel = fxmlLoaderControlPanel.load();
-        controlPanelDialog = new Scene(controlPanel, 200, 200);
+        controlPanelDialog = new Scene(controlPanel, 250, 250);
 
         FXMLLoader fxmlLoaderCategoria = new FXMLLoader(getClass().getResource("controllers/categoria/Categoria.fxml"));
         Parent categoria = fxmlLoaderCategoria.load();
@@ -59,6 +60,10 @@ public class MainSystemGui extends Application {
         FXMLLoader fxmlLoaderPlano = new FXMLLoader(getClass().getResource("controllers/plano/Plano.fxml"));
         Parent plano = fxmlLoaderPlano.load();
         planoDialog = new Scene(plano, 200, 150);
+
+        FXMLLoader fxmlLoaderHistoricoIndicador = new FXMLLoader(getClass().getResource("controllers/historicoIndicador/HistoricoIndicador.fxml"));
+        Parent historicoIndicador = fxmlLoaderHistoricoIndicador.load();
+        historicoIndicadorDialog = new Scene(historicoIndicador, 200, 200);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
@@ -70,6 +75,7 @@ public class MainSystemGui extends Application {
         ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
         CategoriaController categoriaGuiController = fxmlLoaderCategoria.getController();
         PlanoController planoGuiController = fxmlLoaderPlano.getController();
+        HistoricoIndicadorController historicoIndicadorGuiController = fxmlLoaderHistoricoIndicador.getController();
 
         indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
                 subsistema_negocios.getUnidadesMedidaRegistadas());
@@ -79,6 +85,7 @@ public class MainSystemGui extends Application {
         controlPanelGuiController.setup();
         categoriaGuiController.setup();
         planoGuiController.setup();
+        historicoIndicadorGuiController.setup();
 
         userGuiController.buttonDialogUserRegister.setOnAction(actionEvent -> {
             /*
@@ -168,23 +175,22 @@ public class MainSystemGui extends Application {
         });
 
         indicadorGuiController.buttonDialogIndicadorCriar.setOnAction(actionEvent -> {
-            if(indicadorGuiController.textFieldDialogIndicadorNome.getText().length()>0 &&
+            if (indicadorGuiController.textFieldDialogIndicadorNome.getText().length() > 0 &&
                     indicadorGuiController.comboBoxDialogIndicadorUnidades.getSelectionModel().getSelectedItem() != null &&
-                    indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() != null){
-            String designacao = indicadorGuiController.textFieldDialogIndicadorNome.getText();
-            String unidade = indicadorGuiController.comboBoxDialogIndicadorUnidades.getSelectionModel().getSelectedItem().toString();
+                    indicadorGuiController.comboBoxDialogIndicadorCategoria.getSelectionModel().getSelectedItem() != null) {
+                String designacao = indicadorGuiController.textFieldDialogIndicadorNome.getText();
+                String unidade = indicadorGuiController.comboBoxDialogIndicadorUnidades.getSelectionModel().getSelectedItem().toString();
 
-                if(indicadorGuiController.radioButtonDialogIndicadorAutomatico.isSelected()) {
+                if (indicadorGuiController.radioButtonDialogIndicadorAutomatico.isSelected()) {
                     subsistema_negocios.addIndicador(designacao, true, null, unidade);
                     System.out.println("Indicador automatico criado com sucesso!");
 
-                }else{
-                    subsistema_negocios.addIndicador(designacao,false,0.0,unidade);
+                } else {
+                    subsistema_negocios.addIndicador(designacao, false, 0.0, unidade);
                     System.out.println("Indicador manual criado com sucesso!");
                 }
 
-            }
-            else{
+            } else {
                 System.out.println("Existem campos nao preenchidos!");
             }
         });
@@ -209,16 +215,16 @@ public class MainSystemGui extends Application {
 
                 if (categoriaGuiController.radioButtonDialogCategoriaOrientado.isSelected()) {//Orientado insere categoria em si mesmo
                     subsistema_negocios.inserirCategoriaComoOrientado(username, nomeCategoria);
-                    System.out.println("Nova categoria criada com sucesso para o orientado "+username+"!");
+                    System.out.println("Nova categoria criada com sucesso para o orientado " + username + "!");
 
                 } else if (categoriaGuiController.radioButtonDialogCategoriaSupervisor.isSelected()) {//Supervisor insere categoria no sistema
                     subsistema_negocios.inserirCategoriaComoSupervisor(username, nomeCategoria);
-                    System.out.println("Nova categoria criada com sucesso no sistema pelo supervisor "+username+"!");
+                    System.out.println("Nova categoria criada com sucesso no sistema pelo supervisor " + username + "!");
 
                 } else {//Supervisor insere categoria em categorias do orientado
                     String usernameOrientado = categoriaGuiController.comboBoxDialogCategoriaOrientado.getValue().toString();
                     subsistema_negocios.inserirCategoriaEmOrientadoComoSupervisor(username, usernameOrientado, nomeCategoria);
-                    System.out.println("Nova categoria criada com sucesso no orientado "+ usernameOrientado +" pelo supervisor " + username +"!");
+                    System.out.println("Nova categoria criada com sucesso no orientado " + usernameOrientado + " pelo supervisor " + username + "!");
                 }
             }
         });
@@ -229,22 +235,22 @@ public class MainSystemGui extends Application {
                     subsistema_negocios.getCategorias()); //Popula a comboBox das Categorias
         });
 
-      controlPanelGuiController.buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
-          window.setScene(categoriaDialog);
-          if(subsistema_negocios.getSupervisorStatus(userGuiController.textFieldDialogUserUsername.getText())) {
-              Set<String> set = subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText());
-              categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().addAll(set);
-              categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(false);
-              categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(true);
-              categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(false);
-              categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(false);
-          } else {
-              categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(true);
-              categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(false);
-              categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(true);
-              categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(true);
-          }
-            });
+        controlPanelGuiController.buttonDialogControlPanelCriarCategoria.setOnAction(actionEvent -> {
+            window.setScene(categoriaDialog);
+            if (subsistema_negocios.getSupervisorStatus(userGuiController.textFieldDialogUserUsername.getText())) {
+                Set<String> set = subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText());
+                categoriaGuiController.comboBoxDialogCategoriaOrientado.getItems().addAll(set);
+                categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(false);
+                categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(true);
+                categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(false);
+                categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(false);
+            } else {
+                categoriaGuiController.comboBoxDialogCategoriaOrientado.setDisable(true);
+                categoriaGuiController.radioButtonDialogCategoriaOrientado.setDisable(false);
+                categoriaGuiController.radioButtonDialogCategoriaSupervisor.setDisable(true);
+                categoriaGuiController.radioButtonDialogCategoriaSupervisorOrientado.setDisable(true);
+            }
+        });
 
         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setOnAction(actionEvent -> {
             window.setScene(planoDialog);
@@ -263,8 +269,17 @@ public class MainSystemGui extends Application {
             window.setScene(controlPanelDialog);
 
         });
-        }
 
+        controlPanelGuiController.buttonDialogControlPanelConsultarHistoricoIndicador.setOnAction(actionEvent -> {
+            window.setScene(historicoIndicadorDialog);
+        });
+
+        historicoIndicadorGuiController.buttonDialogHistoricoIndicadorVoltar.setOnAction(actionEvent -> {
+            window.setScene(controlPanelDialog);
+
+
+        });
+    }
     public static void main(String[] args) {
         launch(args);
     }
