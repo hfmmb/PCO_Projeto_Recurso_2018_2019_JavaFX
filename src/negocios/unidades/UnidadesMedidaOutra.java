@@ -7,20 +7,29 @@ import java.util.Set;
  */
 public class UnidadesMedidaOutra extends UnidadesMedida{
     private String valor;
+
+    /**
+     *
+     * @param valor
+     * @param unidade
+     */
     public UnidadesMedidaOutra(String valor, String unidade){
         super(unidade);
         this.valor = valor;
-
     }
 
+    /**
+     *
+     * @return
+     */
     public String getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
-
+    /**
+     *
+     * @return
+     */
     public Set<String> getUnidadesMedidaEmRegisto() {
         return UnidadesMedida.getUnidadesMedidaRegistadas();
     }

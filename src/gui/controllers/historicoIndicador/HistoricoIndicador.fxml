@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.historicoIndicador.HistoricoIndicadorController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.historicoIndicador.HistoricoObservacaoController">
   <columnConstraints>
     <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="300.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="10.0" prefWidth="450.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -24,7 +24,7 @@
   </rowConstraints>
    <VBox alignment="CENTER" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
    
-            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="300.0" text="Consultar Historico Indicador">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Consultar Historico Observacoes Indicador">
                <font>
                   <Font size="18.0" />
                </font>
@@ -39,8 +39,14 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="57.0">
          <children>
-            <Label text="Valor: " />
-            <Label fx:id="labelDialogHistoricoIndicadorValor" text="Null" />
+            <Label text="Observacao: " />
+            <Label fx:id="labelDialogHistoricoIndicadorObservacao" text="Null" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Label text="Supervisor: " />
+            <Label fx:id="labelDialogHistoricoIndicadorSupervisor" text="Null" />
          </children>
       </HBox>
       <HBox alignment="CENTER">

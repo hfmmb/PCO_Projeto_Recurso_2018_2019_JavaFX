@@ -18,7 +18,7 @@ package gui;
 
 import gui.controllers.categoria.CategoriaController;
 import gui.controllers.controlPanel.ControlPanelController;
-import gui.controllers.historicoIndicador.HistoricoIndicadorController;
+import gui.controllers.historicoIndicador.HistoricoObservacaoController;
 import gui.controllers.indicador.IndicadorController;
 import gui.controllers.plano.PlanoController;
 import gui.controllers.user.UserController;
@@ -31,9 +31,12 @@ import negocios.SubsistemaNegocios;
 
 import java.util.Set;
 
+/**
+ *
+ */
 public class MainSystemGui extends Application {
     private Stage window; //Janela JavaFX
-    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog, historicoIndicadorDialog; //Layout das diferentes janelas
+    private Scene loginRegisterDialog, indicadorDialog, controlPanelDialog,categoriaDialog, planoDialog, historicoObservacoesIndicadorDialog; //Layout das diferentes janelas
     @Override
     public void start(Stage primaryStage) throws Exception {
         SubsistemaNegocios subsistema_negocios = SubsistemaNegocios.getInstance(); //Obtem a instancia do Singleton Sistema de Negocios
@@ -62,8 +65,8 @@ public class MainSystemGui extends Application {
         planoDialog = new Scene(plano, 200, 150);
 
         FXMLLoader fxmlLoaderHistoricoIndicador = new FXMLLoader(getClass().getResource("controllers/historicoIndicador/HistoricoIndicador.fxml"));
-        Parent historicoIndicador = fxmlLoaderHistoricoIndicador.load();
-        historicoIndicadorDialog = new Scene(historicoIndicador, 200, 200);
+        Parent historicoObservacoesIndicador = fxmlLoaderHistoricoIndicador.load();
+        historicoObservacoesIndicadorDialog = new Scene(historicoObservacoesIndicador, 400, 200);
 
         window.setTitle("Login");
         window.setScene(loginRegisterDialog);
@@ -75,7 +78,7 @@ public class MainSystemGui extends Application {
         ControlPanelController controlPanelGuiController = fxmlLoaderControlPanel.getController();
         CategoriaController categoriaGuiController = fxmlLoaderCategoria.getController();
         PlanoController planoGuiController = fxmlLoaderPlano.getController();
-        HistoricoIndicadorController historicoIndicadorGuiController = fxmlLoaderHistoricoIndicador.getController();
+        HistoricoObservacaoController historicoIndicadorGuiController = fxmlLoaderHistoricoIndicador.getController();
 
         indicadorGuiController.comboBoxDialogIndicadorUnidades.getItems().addAll(
                 subsistema_negocios.getUnidadesMedidaRegistadas());
@@ -254,7 +257,7 @@ public class MainSystemGui extends Application {
 
         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setOnAction(actionEvent -> {
             window.setScene(planoDialog);
-            planoGuiController.comboBoxDialogPlanoIndicador.getItems().addAll(subsistema_negocios.getIndicadoresRegistadosSet());
+            planoGuiController.comboBoxDialogPlanoIndicador.getItems().addAll(subsistema_negocios.getIndicadoresRegistadosMap());
 
         });
 
@@ -271,7 +274,9 @@ public class MainSystemGui extends Application {
         });
 
         controlPanelGuiController.buttonDialogControlPanelConsultarHistoricoIndicador.setOnAction(actionEvent -> {
-            window.setScene(historicoIndicadorDialog);
+            window.setScene(historicoObservacoesIndicadorDialog);
+            historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.getItems().addAll(
+                    subsistema_negocios.getIndicadoresRegistadosMap().values());
         });
 
         historicoIndicadorGuiController.buttonDialogHistoricoIndicadorVoltar.setOnAction(actionEvent -> {
@@ -282,7 +287,28 @@ public class MainSystemGui extends Application {
     controlPanelGuiController.buttonDialogControlPanelTerminal.setOnAction(actionEvent -> {
         subsistema_negocios.terminalMode();
     });
+
+    historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.setOnAction(actionEvent -> {
+        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorRegisto.getItems().clear();
+        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorRegisto.getItems().addAll(
+                subsistema_negocios.getIndicadoresRegistadosMap().get(
+                        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.getSelectionModel().getSelectedIndex()).getHistoricoObservacoesIndicadorSet());
+
+    });
+
+    historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorRegisto.setOnAction(actionEvent -> {
+        historicoIndicadorGuiController.labelDialogHistoricoIndicadorTimestamp.setText(
+                subsistema_negocios.getIndicadoresRegistadosMap().get(
+                        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.getSelectionModel().getSelectedIndex()).getHistoricoObservacoesIndicadorSet().iterator().next().getTimestamp().toString());
+        historicoIndicadorGuiController.labelDialogHistoricoIndicadorObservacao.setText(
+                subsistema_negocios.getIndicadoresRegistadosMap().get(
+                        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.getSelectionModel().getSelectedIndex()).getHistoricoObservacoesIndicadorSet().iterator().next().getObservacao());
+        historicoIndicadorGuiController.labelDialogHistoricoIndicadorSupervisor.setText(
+                subsistema_negocios.getIndicadoresRegistadosMap().get(
+                        historicoIndicadorGuiController.comboBoxDialogHistoricoIndicadorIndicador.getSelectionModel().getSelectedIndex()).getHistoricoObservacoesIndicadorSet().iterator().next().getUsernameSupervisor());
+    });
     }
+
 
     public static void main(String[] args) {
         launch(args);

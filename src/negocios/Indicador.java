@@ -5,9 +5,7 @@ import negocios.unidades.UnidadesMedidaImperial;
 import negocios.unidades.UnidadesMedidaMetrico;
 import negocios.unidades.UnidadesMedidaOutra;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  *  Classe Indicador, contem indicadores de desempenho de alguma coisa, por exemplo, um indicador pode ser de pulsação,
@@ -19,7 +17,8 @@ public class Indicador {
     private Boolean tipo; //true para Automatico, false para Manual
     private UnidadesMedida unidadeMedida;
     private Set<Observacao> historicoObservacoesIndicadorSet = new HashSet<>();
-    private static Set<Indicador> indicadoresRegistadosSet = new HashSet<>();
+    private Set<HistoricoIndicador> historicoIndicadorSet = new HashSet<>();
+    private static Map<Integer,Indicador> indicadoresRegistadosMap = new HashMap<>();
 
     /**
      * Construtor de um indicador do tipo manual
@@ -31,7 +30,7 @@ public class Indicador {
         this.designacao = designacao;
         this.tipo = false;
         this.unidadeMedida = criarUnidadeMedida(valorUnidade, unidade);
-        historicoObservacoesIndicadorSet.add(new Observacao(valorUnidade.toString(),unidade));
+        historicoIndicadorSet.add(new HistoricoIndicador(valorUnidade.toString()));
     }
 
     /**
@@ -43,41 +42,97 @@ public class Indicador {
         this.designacao = "Automatico Indicador " + designacao;
         this.tipo = true;
         this.unidadeMedida = criarUnidadeMedida(0.0, unidade);
-        historicoObservacoesIndicadorSet.add(new Observacao("0.0", unidade));
+        historicoIndicadorSet.add(new HistoricoIndicador("0.0"));
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDesignacao() {
         return designacao;
     }
 
+    /**
+     *
+     * @return
+     */
     public UnidadesMedida getUnidadeMedida() {
         return unidadeMedida;
     }
 
+    /**
+     *
+     * @param unidadeMedida
+     */
+    public void setUnidadeMedida(UnidadesMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
+    }
+
+    /**
+     *
+     * @return
+     */
     public Boolean getTipo() {
         return tipo;
     }
-    public static void addIndicadorSet(String designacao, Boolean tipo,Double valorUnidade, String unidade){
-        if(tipo == false){
-            indicadoresRegistadosSet.add(new Indicador(designacao,valorUnidade,unidade));//Manual
+
+    /**
+     *
+     * @param designacao
+     * @param tipo
+     * @param valorUnidade
+     * @param unidade
+     */
+    public static void addIndicadorMap(String designacao, Boolean tipo, Double valorUnidade, String unidade){
+        Indicador indicador;
+        if(!tipo){
+            indicador = new Indicador(designacao,valorUnidade,unidade);
+            indicadoresRegistadosMap.putIfAbsent(indicadoresRegistadosMap.size(),indicador);//Manual
         }else{
-            indicadoresRegistadosSet.add(new Indicador(designacao,unidade)); //Automatico
+            indicador = new Indicador(designacao,unidade);
+            indicadoresRegistadosMap.putIfAbsent(indicadoresRegistadosMap.size(),indicador); //Automatico
         }
+
     }
 
+    /**
+     *
+     * @param indicador
+     */
+    public static void addIndicadorMap(Indicador indicador){
+            indicadoresRegistadosMap.putIfAbsent(indicadoresRegistadosMap.size(),indicador);
+        }
+
+    /**
+     *
+     * @param indicador
+     */
     public static void removeIndicadorSet(Indicador indicador){
-        indicadoresRegistadosSet.remove(indicador);
+        indicadoresRegistadosMap.remove(indicador);
     }
 
-    public static Set<Indicador> getIndicadoresRegistadosSet(){
-        return indicadoresRegistadosSet;
+    /**
+     *
+     * @return
+     */
+    public static Map<Integer,Indicador> getIndicadoresRegistadosMap(){
+        return indicadoresRegistadosMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set getUnidadesMedida(){
         return unidadeMedida.getUnidadesMedidaRegistadas();
     }
 
-    public Set<Observacao> getHistoricoIndicador() {
+    /**
+     *
+     * @return
+     */
+    public Set<Observacao> getHistoricoObservacoesIndicador() {
         return historicoObservacoesIndicadorSet;
     }
 
@@ -127,5 +182,74 @@ public class Indicador {
                     " SUPERVISOR: "+ iterator.next().getUsernameSupervisor().toString());
         }
         return historicoObservacoesIndicadorSetString;
+    }
+
+    /**
+     *
+     * @param opcao
+     */
+    public void convertUnidadeMedida(int opcao){
+        switch (opcao){
+            case 0:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaMm();
+                break;
+            case 1:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaCm();
+                break;
+            case 2:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaDec();
+                break;
+            case 3:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaDm();
+                break;
+            case 4:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaHm();
+                break;
+            case 5:
+                ((UnidadesMedidaMetrico) unidadeMedida).metrosParaKm();
+                break;
+            case 6:
+                unidadeMedida = new UnidadesMedidaMetrico(UnidadesMedidaImperial.JardasParaMetros(((UnidadesMedidaImperial) unidadeMedida ).getValor()));
+                break;
+            case 7:
+                ((UnidadesMedidaImperial) unidadeMedida).jardasParaPolegadas();
+                break;
+            case 8:
+                ((UnidadesMedidaImperial) unidadeMedida).jardasParaPes();
+                break;
+            case 9:
+                ((UnidadesMedidaImperial) unidadeMedida).jardasParaChain();
+                break;
+            case 10:
+                ((UnidadesMedidaImperial) unidadeMedida).jardasParaFurlong();
+                break;
+            case 11:
+                ((UnidadesMedidaImperial) unidadeMedida).jardasParaMilhas();
+                break;
+            case 12:
+                unidadeMedida = new UnidadesMedidaImperial(UnidadesMedidaMetrico.metrosParaJardas(((UnidadesMedidaMetrico) unidadeMedida ).getValor()));
+                break;
+        }
+    }
+
+    public Set<HistoricoIndicador> getHistoricoIndicadorSet() {
+        return historicoIndicadorSet;
+    }
+
+    /**
+     *
+     */
+    public void updateHistoricoIndicadorSet(){
+        if (this.getUnidadeMedida() instanceof UnidadesMedidaMetrico){
+            Double valor = ((UnidadesMedidaMetrico) this.getUnidadeMedida()).getValor();
+            historicoIndicadorSet.add(new HistoricoIndicador(valor.toString()));
+        }
+        else if (this.getUnidadeMedida() instanceof UnidadesMedidaImperial){
+            Double valor = ((UnidadesMedidaImperial) this.getUnidadeMedida()).getValor();
+            historicoIndicadorSet.add(new HistoricoIndicador(valor.toString()));
+        }
+        else {
+
+        }
     }
 }

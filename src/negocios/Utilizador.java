@@ -1,7 +1,6 @@
 package negocios;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,24 +10,16 @@ import java.util.Set;
 public abstract class Utilizador {
     protected String utilizador;
     protected String password;
-    protected Map<String,Indicador> indicadoresMap;
-    private static Set todasCategoriasSet = new HashSet();
+    private static Set<String> todasCategoriasSet = new HashSet();
+
     protected Utilizador(String utilizador, String password){
         this.utilizador = utilizador;
         this.password = password;
     }
 
-
-    protected Utilizador(String utilizador, String password, Indicador indicador){
-        this.utilizador = utilizador;
-        this.password = password;
-        this.indicadoresMap.putIfAbsent(indicador.getDesignacao(),indicador);
-    }
-
-
     /**
      * Obtem o username do utilizador
-     * @return
+     * @return Retorna o username do utilizador
      */
     protected String getUtilizador() {
         return utilizador;
@@ -36,7 +27,7 @@ public abstract class Utilizador {
 
     /**
      * Obtem a password do utilizador
-     * @return
+     * @return Retorna a password do utilizador
      */
     protected String getPassword() {
         return password;
@@ -44,21 +35,26 @@ public abstract class Utilizador {
 
     /**
      * Insere uma categoria ao Set que contem todas as categorias registadas
-     * @param categoria
+     * @param categoria Nome da categoria
      */
     protected void insertCategoria(String categoria){
         if(!todasCategoriasSet.contains(categoria)) {
             todasCategoriasSet.add(categoria);
         }
     }
-    public static Set getTodasCategoriasRegistadas(){
+
+    /**
+     * Obtem o Set que contem todas as categorias registadas no sistema
+     * @return Retorna o set de categorias registadas no sistema
+     */
+    public static Set<String> getTodasCategoriasRegistadas(){
         return todasCategoriasSet;
 }
+
     /**
      * Remove uma categoria ao Set que contem todas as categorias registadas
-     * @param categoria
+     * @param categoria Nome da categoria
      */
-
     protected void removerCategoria(String categoria){
         todasCategoriasSet.remove(categoria);
 }

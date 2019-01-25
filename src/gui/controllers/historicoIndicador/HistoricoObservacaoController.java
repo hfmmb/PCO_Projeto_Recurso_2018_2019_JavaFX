@@ -3,14 +3,14 @@ package gui.controllers.historicoIndicador;
 import gui.controllers.GuiController;
 import javafx.scene.control.*;
 
-public class HistoricoIndicadorController extends GuiController {
-
+public class HistoricoObservacaoController extends GuiController {
 
     public ComboBox comboBoxDialogHistoricoIndicadorRegisto;
     public ComboBox comboBoxDialogHistoricoIndicadorIndicador;
     public Label labelDialogHistoricoIndicadorTimestamp;
-    public Label labelDialogHistoricoIndicadorValor;
+    public Label labelDialogHistoricoIndicadorObservacao;
     public Button buttonDialogHistoricoIndicadorVoltar;
+    public Label labelDialogHistoricoIndicadorSupervisor;
 
     public void setup(){
 
@@ -27,9 +27,6 @@ public class HistoricoIndicadorController extends GuiController {
     }
 
     public void buttonDialogHistoricoIndicadorVoltarActionListener() {
-        buttonDialogHistoricoIndicadorVoltar.setOnAction(actionEvent -> {
-
-    });
-
+        buttonDialogHistoricoIndicadorVoltar.setOnAction(actionEvent -> {});
     }
 }

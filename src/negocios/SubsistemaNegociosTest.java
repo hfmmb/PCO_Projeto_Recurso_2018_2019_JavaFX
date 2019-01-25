@@ -2,11 +2,8 @@ package negocios;
 
 import negocios.unidades.UnidadesMedidaImperial;
 import negocios.unidades.UnidadesMedidaMetrico;
-
 import java.util.Date;
-import java.util.Set;
-
-import static negocios.Indicador.getIndicadoresRegistadosSet;
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -54,38 +51,19 @@ public class SubsistemaNegociosTest {
     void valueInstanceUnidadeMedidaMetrico(){
         assertEquals(true,  plano.getIndicador().getUnidadeMedida() instanceof UnidadesMedidaMetrico);
     }
-/*
-    @org.junit.jupiter.api.Test
-    void assertIndicadorDataDesignacaoQuality(){
 
-    }
-    @org.junit.jupiter.api.Test
-    void assertIndicadorDataTipoQuality(){
-        Set<Indicador> indicadorSet = subsistemaNegocios.getIndicadoresRegistadosSet();
-        Indicador indicador = indicadorSet.iterator().next();
-        Boolean check = indicador. instanceof Indicador;
-        assertTrue(check);
-    }    @org.junit.jupiter.api.Test
-
-    void assertIndicadorDataValorUnidadeQuality(){
-        Set<Indicador> indicadorSet = subsistemaNegocios.getIndicadoresRegistadosSet();
-        Indicador indicador = indicadorSet.iterator().next();
-        Boolean check = indicador instanceof Indicador;
-        assertTrue(check);
-    }
-    */
     @org.junit.jupiter.api.Test
     void assertIndicadorDataValorUnidadeQuality(){
-        Set<Indicador> indicadorSet = subsistemaNegocios.getIndicadoresRegistadosSet();
-        Indicador indicador = indicadorSet.iterator().next();
+        Map<Integer,Indicador> indicadorMap = subsistemaNegocios.getIndicadoresRegistadosMap();
+        Indicador indicador = indicadorMap.get(indicadorMap.size()-1);
         UnidadesMedidaMetrico unidadesMedida = (UnidadesMedidaMetrico) indicador.getUnidadeMedida();
         assertEquals(20.0, unidadesMedida.getValor());
     }
 
     @org.junit.jupiter.api.Test
     void assertIndicadorDataUnidadeQuality(){
-        Set<Indicador> indicadorSet = subsistemaNegocios.getIndicadoresRegistadosSet();
-        Indicador indicador = indicadorSet.iterator().next();
+        Map<Integer,Indicador> indicadorMap = subsistemaNegocios.getIndicadoresRegistadosMap();
+        Indicador indicador = indicadorMap.get(indicadorMap.size()-1);
         assertTrue(indicador.getUnidadeMedida() instanceof UnidadesMedidaMetrico);
     }
 }

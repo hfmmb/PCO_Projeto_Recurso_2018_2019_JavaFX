@@ -5,8 +5,6 @@ import negocios.unidades.UnidadesMedidaMetrico;
 
 import java.util.*;
 
-// Fazer map indicadores em vez de lista
-
 /**
  * O SubsistemaNegocios é a classe principal do pacote negocios e é responsavel por fazer a logica e funcionamento
  * principal do programa/backend, esta faz logins, cria utilizadores, faz associacoes, etc...
@@ -24,6 +22,7 @@ public class SubsistemaNegocios {
             subsistema_negocios = new SubsistemaNegocios();}
         return subsistema_negocios;
     }
+
     /**
      * Cria alguns valores predefinidos para ajudar com o debug e teste do programa Utilizadores, Categorias, etc...
      */
@@ -64,17 +63,21 @@ public class SubsistemaNegocios {
         orientado3.criarNovoPlano(new Date(),"5","10","Jardas saltadas por semana",
                 20.0,"Jardas",supervisor.getUtilizador());
 
+        orientado.getPlanosSet().iterator().next().getIndicador().inserirObservacao("Teste de observacao em indicador",supervisor.getUtilizador());
+
         //Associa alguns orientados a um supervisor
         supervisor.associarOrientadoSupervisor(orientado);
         supervisor.associarOrientadoSupervisor(orientado2);
         supervisor.associarOrientadoSupervisor(orientado3);
         supervisor.associarOrientadoSupervisor(orientado4);
+
+
     }
 
     /**
      * Regista um novo Orientado
-     * @param username
-     * @param password
+     * @param username Username do orientado
+     * @param password Password do orientado
      */
     public void registarOrientado(String username, String password){
         utilizadoresRegistadosMap.put(username, new Orientado(username, password));
@@ -128,7 +131,7 @@ public class SubsistemaNegocios {
      * Retorna um Set com todas as categorias registadas
      * @return
      */
-    public Set getCategorias(){
+    public Set<String> getCategorias(){
         return Utilizador.getTodasCategoriasRegistadas();
     }
 
@@ -209,7 +212,6 @@ public class SubsistemaNegocios {
             return supervisor.getOrientadosAssociadosSupervisor();
     }
 
-
     /**
      * Obtem o username dos orientados associados a um determinado supervisor
      * @param usernameSupervisor Username do supervisor
@@ -220,13 +222,11 @@ public class SubsistemaNegocios {
         return supervisor.getUsernameOrientadosAssociadosSupervisor();
     }
 
-
     /**
      * Associa um determinado orientado a um supervisor
      * @param usernameSupervisor Username do supervisor
      * @param usernameOrientado Username do orientado
      */
-
     public void associarOrientadoSupervisor(String usernameSupervisor, String usernameOrientado){
         Supervisor supervisor = (Supervisor) utilizadoresRegistadosMap.get(usernameSupervisor);
         Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
@@ -243,25 +243,40 @@ public class SubsistemaNegocios {
         Orientado orientado = (Orientado) utilizadoresRegistadosMap.get(usernameOrientado);
         supervisor.desassociarOrientadoSupervisor(orientado);
     }
+
+    /**
+     *
+     * @param designacao
+     * @param tipo
+     * @param valorUnidade
+     * @param unidade
+     */
     public void addIndicador(String designacao,Boolean tipo,Double valorUnidade, String unidade){
-        Indicador.addIndicadorSet(designacao,tipo,valorUnidade,unidade);
-    }
-    public Set<Indicador> getIndicadoresRegistadosSet(){
-        return Indicador.getIndicadoresRegistadosSet();
+        Indicador.addIndicadorMap(designacao,tipo,valorUnidade,unidade);
     }
 
+    /**
+     *
+     * @return
+     */
+    public Map<Integer,Indicador> getIndicadoresRegistadosMap(){
+        return Indicador.getIndicadoresRegistadosMap();
+    }
+
+    /**
+     *
+     */
     public void terminalMode(){
         /*
-         *TODO UC4: Efectuar recolha de observacoes de um indicador
          *TODO UC5: Establecer planos de objetivos de um indicador
-         *TODO UC6: Consultar historico de observacoes de um indicador
          */
         Scanner scanner = new Scanner(System.in);
         int opcao = -1;
+        Indicador indicador;
         while (opcao != 0){
-        System.out.println("[1] Associar Supervisor Orientado               [2] Desassociar Supervisor Orientado\n" +
-                           "[3] Recolher observacao indicador               [4] Establecer plano objetivos indicador\n" +
-                           "[5] Consultar historico observacoes indicador   [6] Converter entre unidades nativas\n\nSelecione uma opcao: ");
+        System.out.println("\n[1] Associar Supervisor Orientado               [2] Desassociar Supervisor Orientado\n" +
+                           "[3] Recolher historico valores indicador        [4] Establecer plano objetivos indicador\n" +
+                           "[5] Converter entre unidades nativas\n\nSelecione uma opcao: ");
         opcao = scanner.nextInt();
         switch (opcao){
             case 1:
@@ -291,19 +306,49 @@ public class SubsistemaNegocios {
                     System.out.println("Os dados fornecidos sao invalidos");
                 }
                 break;
-
             case 3:
-
+                System.out.println("Selecione um indicador: de valor [0] a ["+ getIndicadoresRegistadosMap().size()+"]");
+                opcao = scanner.nextInt();
+                if (getIndicadoresRegistadosMap().size()-1>=opcao){
+                    indicador = getIndicadoresRegistadosMap().get(opcao);
+                    if(indicador.getHistoricoIndicadorSet().size()>0){
+                        System.out.println(indicador.getHistoricoIndicadorSet().iterator().next().getTimestamp()+
+                                "      "+
+                                indicador.getHistoricoIndicadorSet().iterator().next().getValor());
+                    }
+                    else {
+                        System.out.println("O indicador escolhido nao tem historico registado");
+                    }
+                }
+                else {
+                    System.out.println("Valor invalido introduzido");
+                }
                 break;
-
             case 4:
-
+                System.out.println("");
                 break;
             case 5:
-
-                break;
-                case 6:
-
+                    System.out.println("Selecione um indicador: de valor [0] a ["+ getIndicadoresRegistadosMap().size()+"]");
+                    opcao = scanner.nextInt();
+                    if (getIndicadoresRegistadosMap().size()-1>=opcao){
+                        indicador = getIndicadoresRegistadosMap().get(opcao);
+                        if(indicador.getUnidadeMedida() instanceof UnidadesMedidaMetrico){
+                            System.out.println("Introduza uma das opcoes para conversao,[0] Milimetros\n[1] Centimetros\n[2] Decimetros\n[3] Decametros\n[4] Hectometros\n[5] Kilometros\n[6] Metros para Jardas");
+                            opcao = scanner.nextInt();
+                            indicador.convertUnidadeMedida(opcao);
+                        }
+                        else if(indicador.getUnidadeMedida() instanceof UnidadesMedidaImperial){
+                            System.out.println("Introduza uma das opcoes para conversao,[0] Polegadas\n[1] Pes\n[2] Chain\n[3] Furlong\n[4] Milhas\n[5] Jardas para Metros");
+                            opcao = scanner.nextInt();
+                            indicador.convertUnidadeMedida(opcao+7);
+                        }
+                        else{
+                            System.out.println("O tipo de inidade do indicador selecionado nao permite conversoes");
+                        }
+                    }
+                    else {
+                        System.out.println("Valor invalido introduzido");
+                    }
                 break;
         }
         }

@@ -4,14 +4,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ *
+ */
 public class Supervisor extends Utilizador {
     private String especialidade;
     private Set<Orientado> orientadoSet = new HashSet<>();
+
     public Supervisor(String utilizador, String password, String especialidade){
         super(utilizador, password);
         this.especialidade = especialidade;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEspecialidade() {
         return especialidade;
     }
@@ -25,6 +33,7 @@ public class Supervisor extends Utilizador {
         orientado.adicionarCategoria(nomeCategoria); //Adiciona uma categoria ao orientado
         insertCategoria(nomeCategoria); //Atualiza o mapa de todas as categorias
     }
+
     /**
      * Permite ao supervisor remover uma categoria existente num determinado orientado
      * @param nomeCategoria
@@ -42,12 +51,26 @@ public class Supervisor extends Utilizador {
         this.orientadoSet.add(orientado);
     }
 
+    /**
+     *
+     * @param orientado
+     */
     public void desassociarOrientadoSupervisor(Orientado orientado){
         this.orientadoSet.remove(orientado);
     }
+
+    /**
+     *
+     * @return
+     */
     public Set<Orientado> getOrientadosAssociadosSupervisor(){
         return this.orientadoSet;
     }
+
+    /**
+     *
+     * @return
+     */
     public Set<String> getUsernameOrientadosAssociadosSupervisor(){
         Set<String> set = new HashSet<>();
         Iterator iterator = orientadoSet.iterator();
@@ -57,4 +80,5 @@ public class Supervisor extends Utilizador {
             set.add(orientado.getUtilizador());
         }
         return set;
-}}
+    }
+}

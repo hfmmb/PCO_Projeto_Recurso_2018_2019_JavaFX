@@ -1,5 +1,8 @@
 package negocios;
 
+/**
+ * Contem as categorias criadas por utilizadores do sistema
+ */
 public class Categoria {
     private String nome;
     public Categoria(String nome){
