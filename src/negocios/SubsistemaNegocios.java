@@ -57,6 +57,13 @@ public class SubsistemaNegocios {
         orientado.adicionarCategoria("Saude Geral");
         orientado.adicionarCategoria("Saude Cardiaca");
 
+        orientado.criarNovoPlano(new Date(),"0","100","Pushups por dia",
+                                                10.0,"Pushups",supervisor.getUtilizador());
+        orientado2.criarNovoPlano(new Date(),"2","20",
+                "Distancia corrida por dia",10.0,"Metros",supervisor.getUtilizador());
+        orientado3.criarNovoPlano(new Date(),"5","10","Jardas saltadas por semana",
+                20.0,"Jardas",supervisor.getUtilizador());
+
         //Associa alguns orientados a um supervisor
         supervisor.associarOrientadoSupervisor(orientado);
         supervisor.associarOrientadoSupervisor(orientado2);
@@ -127,12 +134,12 @@ public class SubsistemaNegocios {
 
     /**
      *
-     * @return
+     * @return Retorna um set com as unidades de medida registadas no sistema
      */
     public Set<String> getUnidadesMedidaRegistadas(){
         Orientado orientado = new Orientado("Dummy", "Dummy");
-        orientado.criarNovoPlano("0","1","Dummy",true,0.0,"Metros","Dummy");
-        orientado.criarNovoPlano("0","1","Dummy",false,0.0,"Milhas","Dummy");
+        orientado.criarNovoPlano(new Date(),"0","1","Dummy",0.0,"Metros","Dummy");
+        orientado.criarNovoPlano(new Date(),"0","1","Dummy",0.0,"Milhas","Dummy");
         return orientado.getPlanosSet().iterator().next().getIndicador().getUnidadesMedida();
 
     }
@@ -254,7 +261,7 @@ public class SubsistemaNegocios {
         while (opcao != 0){
         System.out.println("[1] Associar Supervisor Orientado               [2] Desassociar Supervisor Orientado\n" +
                            "[3] Recolher observacao indicador               [4] Establecer plano objetivos indicador\n" +
-                           "[5] Consultar historico observacoes indicador\n\nSelecione uma opcao: ");
+                           "[5] Consultar historico observacoes indicador   [6] Converter entre unidades nativas\n\nSelecione uma opcao: ");
         opcao = scanner.nextInt();
         switch (opcao){
             case 1:
@@ -290,6 +297,12 @@ public class SubsistemaNegocios {
                 break;
 
             case 4:
+
+                break;
+            case 5:
+
+                break;
+                case 6:
 
                 break;
         }

@@ -13,16 +13,15 @@ public class Observacao {
         this.observacao = observacao;
         this.usernameSupervisor = usernameSupervisor;
     }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
     public String getObservacao() {
         return observacao;
     }
 
     public Timestamp getTimestamp() {
         return timestamp;
+    }
+
+    public String getUsernameSupervisor() {
+        return usernameSupervisor;
     }
 }

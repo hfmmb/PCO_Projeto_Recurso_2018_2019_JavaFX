@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Classe abstrata responsavel por criar utilizadores
+ * Classe abstrata responsavel por criar utilizadores, adicionalmente tambem faz a gestao de alguns elementos
+ * comuns as suas subclasses.
  */
 public abstract class Utilizador {
     protected String utilizador;

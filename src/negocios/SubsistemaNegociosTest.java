@@ -1,9 +1,9 @@
 package negocios;
 
-import negocios.unidades.UnidadesMedida;
 import negocios.unidades.UnidadesMedidaImperial;
 import negocios.unidades.UnidadesMedidaMetrico;
 
+import java.util.Date;
 import java.util.Set;
 
 import static negocios.Indicador.getIndicadoresRegistadosSet;
@@ -13,23 +13,21 @@ import static org.junit.jupiter.api.Assertions.*;
  * Classe responsavel por fazer testes unitarios de algumas funcoes do programa
  */
 public class SubsistemaNegociosTest {
-    private SubsistemaNegocios subsistemaNegocios;
+    private SubsistemaNegocios subsistemaNegocios = SubsistemaNegocios.getInstance();
     private UnidadesMedidaImperial unidadesMedidaImperial;
     private UnidadesMedidaMetrico unidadesMedidaMetrico;
     private Plano plano;
     @org.junit.jupiter.api.BeforeEach
     void setup(){
-        subsistemaNegocios = new SubsistemaNegocios();
         subsistemaNegocios.registarSupervisor("Kamehameha","","King");
         subsistemaNegocios.registarOrientado("Oda","Nobunaga");
-
 
         unidadesMedidaImperial = new UnidadesMedidaImperial(25.0);
         unidadesMedidaImperial.jardasParaChain();
         unidadesMedidaMetrico = new UnidadesMedidaMetrico(100.0);
         unidadesMedidaMetrico.metrosParaCm();
 
-        plano = new Plano("0","10",new Indicador("Teste",0.0,"Metros"),"Kamehameha");
+        plano = new Plano(new Date(),"0","10",new Indicador("Teste",0.0,"Metros"),"Kamehameha");
 
         subsistemaNegocios.addIndicador("Teste",false,20.0,"Metros");
     }
