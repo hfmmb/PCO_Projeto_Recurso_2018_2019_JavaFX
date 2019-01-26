@@ -2,9 +2,9 @@
  *UC1: Criar categoria de indicador                                            #DONE
  *UC2: Criar indicador                                                         #DONE
  *UC3: Registar novo utilizador                                                #DONE
- *TODO UC4: Efectuar recolha de observacoes de um indicador
+ *UC4: Efectuar recolha de observacoes de um indicador                         #DONE
  *TODO UC5: Establecer planos de objetivos de um indicador
- *TODO UC6: Consultar historico de observacoes de um indicador
+ *UC6: Consultar historico de observacoes de um indicador                      #DONE
  *UC7: Comparar desempenho de um indicador em relacao ao plano establecido     #DNI
  *UC8: Criar versao alternativa a um plano de um indicador                     #DNI
  *UC9: Associar Supervisor a um orientado                                      #DONE
@@ -18,7 +18,7 @@ package gui;
 
 import gui.controllers.categoria.CategoriaController;
 import gui.controllers.controlPanel.ControlPanelController;
-import gui.controllers.historicoIndicador.HistoricoObservacaoController;
+import gui.controllers.historicoObservacoesIndicador.HistoricoObservacaoController;
 import gui.controllers.indicador.IndicadorController;
 import gui.controllers.plano.PlanoController;
 import gui.controllers.user.UserController;
@@ -27,8 +27,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import negocios.Indicador;
+import negocios.Orientado;
 import negocios.SubsistemaNegocios;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -62,9 +66,9 @@ public class MainSystemGui extends Application {
 
         FXMLLoader fxmlLoaderPlano = new FXMLLoader(getClass().getResource("controllers/plano/Plano.fxml"));
         Parent plano = fxmlLoaderPlano.load();
-        planoDialog = new Scene(plano, 200, 150);
+        planoDialog = new Scene(plano, 300, 200);
 
-        FXMLLoader fxmlLoaderHistoricoIndicador = new FXMLLoader(getClass().getResource("controllers/historicoIndicador/HistoricoIndicador.fxml"));
+        FXMLLoader fxmlLoaderHistoricoIndicador = new FXMLLoader(getClass().getResource("controllers/historicoObservacoesIndicador/HistoricoObservacoesIndicador.fxml"));
         Parent historicoObservacoesIndicador = fxmlLoaderHistoricoIndicador.load();
         historicoObservacoesIndicadorDialog = new Scene(historicoObservacoesIndicador, 400, 200);
 
@@ -257,12 +261,23 @@ public class MainSystemGui extends Application {
 
         controlPanelGuiController.buttonDialogControlPanelCriarPlanosOrientado.setOnAction(actionEvent -> {
             window.setScene(planoDialog);
-            planoGuiController.comboBoxDialogPlanoIndicador.getItems().addAll(subsistema_negocios.getIndicadoresRegistadosMap());
+            planoGuiController.comboBoxDialogPlanoOrientado.getItems().addAll(subsistema_negocios.getOrientadosSupervisorUsername(userGuiController.textFieldDialogUserUsername.getText()));
+            planoGuiController.comboBoxDialogPlanoIndicador.getItems().addAll(subsistema_negocios.getIndicadoresRegistadosMap().values());
 
         });
 
         planoGuiController.buttonDialogPlanoCriar.setOnAction(actionEvent -> {
-
+            ((Orientado)  subsistema_negocios.getUtilizador(
+                    planoGuiController.comboBoxDialogPlanoOrientado.getSelectionModel().getSelectedItem().toString())).criarNovoPlano(
+                            new Date(planoGuiController.textFieldDialogPlanoData.getText()),
+                            planoGuiController.textFieldDialogPlanoValorMinimo.getText(),
+                            planoGuiController.textFieldDialogPlanoValorMaximo.getText(),
+                    planoGuiController.comboBoxDialogPlanoIndicador.getSelectionModel().getSelectedItem().toString(),
+                    Double.parseDouble(planoGuiController.textFieldDialogPlanoValorLeituraIndicador.getText()),
+                    ((Indicador) planoGuiController.comboBoxDialogPlanoIndicador.getSelectionModel().getSelectedItem()).getUnidadeMedida().getUnidade(),
+                    userGuiController.textFieldDialogUserUsername.getText());
+                    System.out.println("Novo plano criado com sucesso para o orientado " +
+                            planoGuiController.comboBoxDialogPlanoOrientado.getSelectionModel().getSelectedItem().toString());
         });
         planoGuiController.buttonDialogPlanoCancel.setOnAction(actionEvent -> {
 

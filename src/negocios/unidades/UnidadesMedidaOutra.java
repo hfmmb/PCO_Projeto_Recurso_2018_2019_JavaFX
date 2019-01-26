@@ -9,7 +9,7 @@ public class UnidadesMedidaOutra extends UnidadesMedida{
     private String valor;
 
     /**
-     *
+     * Cria uma unidade de medida "exotica"
      * @param valor
      * @param unidade
      */
@@ -19,8 +19,8 @@ public class UnidadesMedidaOutra extends UnidadesMedida{
     }
 
     /**
-     *
-     * @return
+     * Retorna o valor
+     * @return Retorna o valor
      */
     public String getValor() {
         return valor;
@@ -28,7 +28,7 @@ public class UnidadesMedidaOutra extends UnidadesMedida{
 
     /**
      *
-     * @return
+     * @return Retorna a lista de unidades de medida registadas
      */
     public Set<String> getUnidadesMedidaEmRegisto() {
         return UnidadesMedida.getUnidadesMedidaRegistadas();

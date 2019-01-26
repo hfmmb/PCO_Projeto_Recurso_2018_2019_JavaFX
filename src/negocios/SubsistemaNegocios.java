@@ -120,8 +120,8 @@ public class SubsistemaNegocios {
 
     /**
      * Retorna um objeto do tipo Utilizador
-     * @param utilizador
-     * @return
+     * @param utilizador Nome de utilizador
+     * @return Orientado ou Supervisor encontrado
      */
     public Utilizador getUtilizador(String utilizador){
         return utilizadoresRegistadosMap.get(utilizador);

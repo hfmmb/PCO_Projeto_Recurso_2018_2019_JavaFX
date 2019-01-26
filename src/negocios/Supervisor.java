@@ -17,17 +17,9 @@ public class Supervisor extends Utilizador {
     }
 
     /**
-     *
-     * @return
-     */
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    /**
      * Permite ao supervisor inserir uma nova categoria num determinado orientado
-     * @param nomeCategoria
-     * @param orientado
+     * @param nomeCategoria Nome da categoria
+     * @param orientado Orientado
      */
     protected void inserirCategoriaOrientado(String nomeCategoria, Orientado orientado) {
         orientado.adicionarCategoria(nomeCategoria); //Adiciona uma categoria ao orientado
@@ -36,8 +28,8 @@ public class Supervisor extends Utilizador {
 
     /**
      * Permite ao supervisor remover uma categoria existente num determinado orientado
-     * @param nomeCategoria
-     * @param orientado
+     * @param nomeCategoria Nome da categoria
+     * @param orientado Orientado
      */
     protected void removerCategoriaOrientado(String nomeCategoria, Orientado orientado) {
         orientado.removerCategoria(nomeCategoria); //Retira uma categoria ao orientado
@@ -52,24 +44,24 @@ public class Supervisor extends Utilizador {
     }
 
     /**
-     *
-     * @param orientado
+     * Desassocia um orientado de um supervisor
+     * @param orientado Orientado
      */
     public void desassociarOrientadoSupervisor(Orientado orientado){
         this.orientadoSet.remove(orientado);
     }
 
     /**
-     *
-     * @return
+     * Obtem os orientados associados a um determinado supervisor
+     * @return Set de orientados do supervisor
      */
     public Set<Orientado> getOrientadosAssociadosSupervisor(){
         return this.orientadoSet;
     }
 
     /**
-     *
-     * @return
+     * Obtem os orientados associados a um determinado supervisor em formato de string de usernames destes
+     * @return Retorna um Set de strings
      */
     public Set<String> getUsernameOrientadosAssociadosSupervisor(){
         Set<String> set = new HashSet<>();

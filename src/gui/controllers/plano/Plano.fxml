@@ -11,29 +11,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.plano.PlanoController">
+<GridPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.plano.PlanoController">
   <columnConstraints>
     <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="300.0" />
   </columnConstraints>
   <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="200.0" text="Criar Plano" GridPane.columnIndex="1">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-   <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+   <VBox alignment="TOP_CENTER" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="200.0" text="Criar Plano">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+      <ComboBox fx:id="comboBoxDialogPlanoOrientado" layoutX="10.0" layoutY="62.0" prefWidth="250.0" promptText="Selecione um orientado" />
+      <TextField fx:id="textFieldDialogPlanoData" layoutX="10.0" layoutY="36.0" prefWidth="250.0" promptText="Valor data limite" />
          <TextField fx:id="textFieldDialogPlanoValorMinimo" prefWidth="250.0" promptText="Valor minimo desejado" />
             <TextField fx:id="textFieldDialogPlanoValorMaximo" prefWidth="250.0" promptText="Valor maximo desejado" />
             <ComboBox fx:id="comboBoxDialogPlanoIndicador" prefWidth="250.0" promptText="Selecione um indicador" />
+      <TextField fx:id="textFieldDialogPlanoValorLeituraIndicador" layoutX="10.0" layoutY="109.0" prefWidth="250.0" promptText="Valor leitura indicador" />
    </VBox>
-   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <Button fx:id="buttonDialogPlanoCancel" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogPlanoCancelActionListener" text="Cancelar" textAlignment="CENTER" />
             <Button fx:id="buttonDialogPlanoCriar" defaultButton="true" onAction="#buttonDialogPlanoCriarActionListener" text="Criar" />
    </HBox>

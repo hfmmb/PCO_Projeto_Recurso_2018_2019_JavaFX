@@ -1,12 +1,7 @@
 package negocios;
 
-import negocios.unidades.UnidadesMedidaImperial;
-import negocios.unidades.UnidadesMedidaMetrico;
-
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -34,7 +29,6 @@ public class Plano {
     public Timestamp getTimestamp() {
         return timestamp;
     }
-
 
 
     /**

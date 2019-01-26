@@ -1,4 +1,4 @@
-package gui.controllers.historicoIndicador;
+package gui.controllers.historicoObservacoesIndicador;
 
 import gui.controllers.GuiController;
 import javafx.scene.control.*;

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.historicoIndicador.HistoricoObservacaoController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.historicoObservacoesIndicador.HistoricoObservacaoController">
   <columnConstraints>
     <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="10.0" prefWidth="450.0" />
@@ -32,22 +32,20 @@
       <ComboBox fx:id="comboBoxDialogHistoricoIndicadorIndicador" prefWidth="200.0" promptText="Selecione um indicador" />
       <ComboBox fx:id="comboBoxDialogHistoricoIndicadorRegisto" layoutX="85.0" layoutY="31.0" prefWidth="200.0" promptText="Selecione um registo" />
       <HBox alignment="CENTER">
-         <children>
             <Label text="Timestamp: " />
             <Label fx:id="labelDialogHistoricoIndicadorTimestamp" text="Null" />
-         </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="57.0">
-         <children>
+
             <Label text="Observacao: " />
             <Label fx:id="labelDialogHistoricoIndicadorObservacao" text="Null" />
-         </children>
+
       </HBox>
       <HBox alignment="CENTER">
-         <children>
+
             <Label text="Supervisor: " />
             <Label fx:id="labelDialogHistoricoIndicadorSupervisor" text="Null" />
-         </children>
+
       </HBox>
       <HBox alignment="CENTER">
                      <Button fx:id="buttonDialogHistoricoIndicadorVoltar" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" onAction="#buttonDialogHistoricoIndicadorVoltarActionListener" text="Voltar" textAlignment="CENTER" />

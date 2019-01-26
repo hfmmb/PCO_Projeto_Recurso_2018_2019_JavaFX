@@ -11,6 +11,9 @@ public class PlanoController extends GuiController {
     public ComboBox comboBoxDialogPlanoIndicador;
     public Button buttonDialogPlanoCriar;
     public Button buttonDialogPlanoCancel;
+    public TextField textFieldDialogPlanoData;
+    public ComboBox comboBoxDialogPlanoOrientado;
+    public TextField textFieldDialogPlanoValorLeituraIndicador;
 
     public void setup(){
 
